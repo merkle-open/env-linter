@@ -1,0 +1,11 @@
+/.idea/
+/node_modules/
+/*.js
+/**.js
+/dist/
+/build/
+/coverage/
+/.next/
+/__tests__/
+/bin/
+/scripts/

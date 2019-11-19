@@ -1,0 +1,132 @@
+{
+  "name": "@namics/env-linter",
+  "description": "Bunch of CLI helper for our projects. Check node version, hooks installed and more.",
+  "version": "0.1.0",
+  "author": "Namics AG",
+  "bin": {
+    "env-linter": "./bin/index.js"
+  },
+  "bugs": "https://github.com/namics/env-linter/issues/new",
+  "commitlint": {
+    "extends": [
+      "@namics/commitlint-conventional-changelog"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "@namics/cz-conventional-changelog"
+    }
+  },
+  "contributors": [
+    "Simon Mollweide <simon.mollweide@namics.com>"
+  ],
+  "devDependencies": {
+    "@commitlint/cli": "8.2.0",
+    "@dash4/plugin-actions": "0.7.0",
+    "@dash4/plugin-code-coverage": "0.7.0",
+    "@dash4/plugin-dependencies": "0.7.0",
+    "@dash4/plugin-npm-scripts": "0.7.0",
+    "@dash4/plugin-readme": "0.7.0",
+    "@dash4/plugin-terminal": "0.7.0",
+    "@dash4/server": "0.7.0",
+    "@namics/commitlint-conventional-changelog": "1.1.11",
+    "@namics/cz-conventional-changelog": "1.1.10",
+    "@namics/eslint-config": "8.0.2",
+    "@namics/prettier-config": "0.4.2",
+    "@namics/ts-config": "0.4.3",
+    "@types/fs-extra": "8.0.1",
+    "@types/jest": "24.0.23",
+    "@types/node": "12.12.8",
+    "@types/react": "16.9.11",
+    "@types/zen-observable": "0.8.0",
+    "acorn": "7.1.0",
+    "chalk": "3.0.0",
+    "clean-webpack-plugin": "3.0.0",
+    "commander": "4.0.1",
+    "commitizen": "4.0.3",
+    "eslint": "6.6.0",
+    "eslint-plugin-import": "2.18.2",
+    "fs-extra": "8.1.0",
+    "husky": "3.1.0",
+    "jest": "24.9.0",
+    "license-checker": "25.0.1",
+    "lint-staged": "9.4.3",
+    "npm-run-all": "4.1.5",
+    "ora": "4.0.3",
+    "prettier": "1.19.1",
+    "react": "16.12.0",
+    "react-test-renderer": "16.12.0",
+    "rimraf": "3.0.0",
+    "standard-version": "7.0.1",
+    "ts-config-webpack-plugin": "1.4.0",
+    "ts-jest": "24.1.0",
+    "typescript": "3.7.2",
+    "webpack": "4.41.2",
+    "webpack-cli": "3.3.10",
+    "zen-observable": "0.8.14"
+  },
+  "engines": {
+    "node": ">=8"
+  },
+  "files": [
+    "README.md",
+    "LICENSE",
+    "bin",
+    "build",
+    "dist"
+  ],
+  "homepage": "https://github.com/namics/env-linter",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "keywords": [
+    "cli",
+    "env",
+    "hooks installed",
+    "namics",
+    "node version",
+    "save exact"
+  ],
+  "license": "MIT",
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,md}": [
+      "prettier --write",
+      "git add"
+    ],
+    "src/**/*.{js,jsx,ts,tsx}": [
+      "eslint --ext .jsx,.js,.ts,.tsx"
+    ]
+  },
+  "main": "./dist/index.js",
+  "private": false,
+  "repository": "https://github.com/namics/env-linter",
+  "scripts": {
+    "build": "npm-run-all build:*",
+    "build:bundle": "webpack --mode=\"production\"",
+    "build:definitions": "tsc",
+    "clean": "npx npm-run-all clean:*",
+    "clean:dirs": "npx rimraf lerna-debug.log npm-debug.log package-lock.json",
+    "clean:modules": "npx rimraf node_modules",
+    "cz": "git-cz",
+    "lint": "npm-run-all lint:*",
+    "lint:license": "license-checker --production --summary --exclude \"Apache-2.0, BSD, ISC, LGPL, MIT, MPL\" --failOn \"AGPL; EPL; GPL\"",
+    "lint:ts": "eslint . --ext .jsx,.js,.ts,.tsx",
+    "postbuild": "rimraf build/*.js build/*js.map",
+    "prebuild": "rimraf build dist",
+    "prepublishOnly": "npm-run-all lint test build",
+    "prerelease": "npm-run-all lint test build",
+    "prettier": "prettier --write \"**/*.*(js|jsx|ts|tsx|json|md)\"",
+    "release": "standard-version",
+    "sort-package": "npx fixpack",
+    "start": "dash4",
+    "test": "jest --coverage",
+    "watch": "run-p watch:*",
+    "watch-test": "jest --watchAll --coverage --notify --notifyMode=failure-change",
+    "watch:bundle": "webpack --watch --mode=\"development\"",
+    "watch:definitions": "tsc -w"
+  },
+  "typings": "./build/index.d.ts"
+}
