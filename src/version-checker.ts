@@ -1,121 +1,54 @@
-import path from 'path';
-import fs from 'fs-extra';
-import execa from 'execa';
 import semver from 'semver';
-import chalk from 'chalk';
-import logSymbols from 'log-symbols';
-import fetch from 'node-fetch';
+import { INodeVersion } from './const';
+import { getNodeList } from './fetch-node-versions';
+import { getNodeVersionFromFile } from './get-file-data';
+import { getInstalledVersion } from './get-version';
+import { logMessages } from './log-messages';
 
-interface INodeVersion {
-	version: string;
-	npm: string;
-}
-
-type TProgram = 'node' | 'npm';
-
-const nodeVersionList = `https://nodejs.org/dist/index.json`;
-
-export const isValidVersion = (usedVersion: string, expectedVersion: string): boolean => {
-	return semver.satisfies(usedVersion, expectedVersion);
-};
-
-export const getInstalledVersion = async (program: TProgram): Promise<string | void> => {
-	return await execa(program, ['--version'])
-		.then((version) => version.stdout.replace(/v/, '').trim())
-		.catch(() => {
-			console.error(`${logSymbols.error} Error when asking for '${program} --version'. Is ${program} installed?`);
-			process.exit(1);
-		});
-};
-
-export const getFileData = async (filePath: string): Promise<string> => {
-	const pathName = path.resolve(filePath);
-	return (await fs.readFile(pathName, 'utf8')).trim();
-};
-
-export const getNodeVersionFromFile = async (): Promise<string | undefined | void> => {
-	return getFileData('.node-version').catch(() => {
-		console.error(
-			chalk.red(`${logSymbols.error} Couldn't find .node-version file in your project root directory.`)
-		);
-		process.exit(1);
+export const isNPMandNodeMatching = (nodeList: INodeVersion[], usedNodeVersion: string, usedNPMVersion: string) => {
+	return nodeList.some((nodeVersion) => {
+		return nodeVersion.version.slice(1) === usedNodeVersion && nodeVersion.npm === usedNPMVersion;
 	});
 };
 
-export const parseVersionArgs = (versions: string[]): { node; npm } => {
-	return versions.reduce(
-		(acc, current) => {
-			const programAndVersion = current.split('=');
-			acc[programAndVersion[0].trim()] = programAndVersion[1].trim();
-			return acc;
-		},
-		{ node: undefined, npm: undefined }
-	);
-};
-
-export const getNodeList = async (): Promise<INodeVersion[] | void> => {
-	return fetch(nodeVersionList)
-		.then(async (result) => result.json())
-		.catch(() =>
-			console.warn(
-				chalk.yellow(
-					`${logSymbols.warning} Could not fetch node-list from ${nodeVersionList}. Your NPM version might not match your node version.`
-				)
-			)
-		);
-};
-
-export const isNPMandNodeMatching = async (usedNodeVersion: string, usedNPMVersion: string): Promise<boolean> => {
+export const getNPMmatchesNodeLog = async (usedNodeVersion: string, usedNPMVersion: string) => {
 	const nodeList = await getNodeList();
-	return nodeList
-		? nodeList.some(
-				(nodeVersion) => nodeVersion.version.slice(1) === usedNodeVersion && nodeVersion.npm === usedNPMVersion
-		  )
-		: true;
+	if (nodeList.error) {
+		return nodeList.text;
+	}
+	return isNPMandNodeMatching(JSON.parse(nodeList.text), usedNodeVersion, usedNPMVersion)
+		? logMessages.success.nodeVersionWorksWithNPMVersion(usedNodeVersion, usedNPMVersion)
+		: logMessages.error.changeNPMVersion(usedNodeVersion);
 };
 
-export const checkNPMmatchesNode = async (usedNodeVersion: string, usedNPMVersion: string) => {
-	if (isNPMandNodeMatching(usedNodeVersion, usedNPMVersion)) {
-		console.info(
-			`${logSymbols.success} Your node version ${usedNodeVersion} works with your npm version ${usedNPMVersion}`
-		);
-	} else {
-		console.error(
-			chalk.red(
-				`${logSymbols.error} Change npm version! You are using node ${usedNodeVersion}, keep node and npm in sync!`
-			)
-		);
-		process.exit(1);
-	}
+export const getValidVersionLog = async (program: string, usedVersion: string, expectedVersion: string) => {
+	return semver.satisfies(usedVersion, expectedVersion)
+		? logMessages.success.programVersionSatiesfies(program, usedVersion, expectedVersion)
+		: logMessages.error.changeProgramVersion(program, usedVersion, expectedVersion);
 };
 
-export const checkIsValidVersion = (program: TProgram, usedVersion: string, expectedVersion: string) => {
-	if (isValidVersion(usedVersion, expectedVersion)) {
-		console.info(
-			`${logSymbols.success} Your ${program} version ${usedVersion} works with the expected version (${expectedVersion}) of your project.`
-		);
-	} else {
-		console.error(
-			chalk.red(
-				`${logSymbols.error} Change ${program} version! You are using ${usedVersion} but your project requires ${expectedVersion}.`
-			)
-		);
-		process.exit(1);
+export const processVersionArgument = async (versionArgument: string) => {
+	const [program, expectedVersionCli] = versionArgument.split('=').map((item) => item.trim());
+	const expectedVersion =
+		program === 'node' && !expectedVersionCli
+			? await getNodeVersionFromFile('.node-version')
+			: { error: false, text: expectedVersionCli };
+	if (expectedVersion.error) {
+		return expectedVersion.text;
 	}
+	const usedVersion = await getInstalledVersion(program);
+	return usedVersion.error ? usedVersion.text : getValidVersionLog(program, usedVersion.text, expectedVersion.text);
 };
 
-export const checkVersions = async (versions: string[] | undefined) => {
-	const cliExpectedVersions = versions ? parseVersionArgs(versions) : { node: undefined, npm: undefined };
-
-	const usedNodeVersion = (await getInstalledVersion('node')) as string;
-	const expectedNodeVersion = cliExpectedVersions.node || (await getNodeVersionFromFile());
-	checkIsValidVersion('node', usedNodeVersion, expectedNodeVersion);
-
-	const usedNPMVersion = (await getInstalledVersion('npm')) as string;
-	if (cliExpectedVersions.npm) {
-		const expectedNPMVersion = cliExpectedVersions.npm;
-		checkIsValidVersion('npm', usedNPMVersion, expectedNPMVersion);
+export const getVersionCheckers = async (versionArguments: string[]) => {
+	const versionChecks = versionArguments.map(async (versionArgument) => processVersionArgument(versionArgument));
+	const usedNodeVersion = await getInstalledVersion('node');
+	const usedNPMVersion = await getInstalledVersion('npm');
+	if (usedNodeVersion.error || usedNPMVersion.error) {
+		const usedVersionError = usedNodeVersion.error ? usedNodeVersion.text : usedNPMVersion.text;
+		versionChecks.push(Promise.resolve(usedVersionError));
+		return versionChecks;
 	}
-
-	checkNPMmatchesNode(usedNodeVersion, usedNPMVersion);
+	versionChecks.push(getNPMmatchesNodeLog(usedNodeVersion.text, usedNPMVersion.text));
+	return versionChecks;
 };

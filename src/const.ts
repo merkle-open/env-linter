@@ -15,3 +15,15 @@ export interface IProgram {
 	rawArgs: string[];
 	args: string[];
 }
+
+export interface INodeVersion {
+	version: string;
+	npm: string;
+	date: string;
+	security: boolean;
+}
+
+export interface ILogOutput {
+	error: boolean;
+	text: string;
+}

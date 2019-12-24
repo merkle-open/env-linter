@@ -6,14 +6,14 @@ describe('fetch-options', () => {
 		global.process.argv = [
 			'/usr/local/bin/node',
 			'/usr/local/bin/env-linter',
-			'--versions=node=12.13.0,npm=6.4.1',
+			'--versions=node=12.14.0,npm=6.4.1',
 			'--hooksInstalled',
 			'--saveExact',
 		];
 		const options = await fetchOptions();
 		delete options.cwd;
 		expect(options).toEqual({
-			versions: ['node=12.13.0', 'npm=6.4.1'],
+			versions: ['node=12.14.0', 'npm=6.4.1'],
 			hooksInstalled: true,
 			saveExact: true,
 		});
@@ -31,6 +31,7 @@ describe('fetch-options', () => {
 		expect(options).toEqual({
 			hooksInstalled: true,
 			saveExact: true,
+			versions: [],
 		});
 	});
 	it('without versions and hooksInstalled', async () => {

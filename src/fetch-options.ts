@@ -4,9 +4,10 @@ import { IProgram, IOptions } from './const';
 
 async function transformAnswersToOptions({ versions, hooksInstalled, saveExact }: IProgram): Promise<IOptions> {
 	const cwd = await getCwd();
+	const hasVersionsArg = versions ? [] : undefined;
 	return {
 		cwd,
-		versions: typeof versions === 'string' ? versions.split(',') : undefined,
+		versions: typeof versions === 'string' ? versions.split(',') : hasVersionsArg,
 		hooksInstalled,
 		saveExact,
 	};
