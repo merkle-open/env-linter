@@ -12,11 +12,13 @@ const { Response } = jest.requireActual('node-fetch');
 
 import { logMessages } from '../src/log-messages';
 import {
-	isNPMandNodeMatching,
 	getNPMmatchesNodeLog,
 	getValidVersionLog,
 	getVersionCheckers,
+	isNPMandNodeMatching,
+	processVersionArgument,
 } from '../src/version-checker';
+import { ILogMessage } from '../src/const';
 
 const exampleNodeList = [{ version: 'v12.14.0', date: '2019-12-16', npm: '6.13.4', security: true }];
 const nodeVersionListURL = 'https://nodejs.org/dist/index.json';
@@ -33,53 +35,99 @@ describe('isNPMandNodeMatching', () => {
 describe('getNPMmatchesNodeLog', () => {
 	it('should return the correct success-text', async () => {
 		(fetch as any).mockReturnValue(Promise.resolve(new Response(JSON.stringify(exampleNodeList))));
-		expect(await getNPMmatchesNodeLog('12.14.0', '6.13.4')).toBe(
-			logMessages.success.nodeVersionWorksWithNPMVersion('12.14.0', '6.13.4')
-		);
+		expect(await getNPMmatchesNodeLog('12.14.0', '6.13.4')).toMatchObject({
+			error: false,
+			text: logMessages.success.nodeVersionWorksWithNPMVersion('12.14.0', '6.13.4'),
+		});
 	});
 	it('should return error-text when node and npm versions do not match', async () => {
 		(fetch as any).mockReturnValue(Promise.resolve(new Response(JSON.stringify(exampleNodeList))));
-		expect(await getNPMmatchesNodeLog('12.14.0', '6.0.0')).toBe(logMessages.error.changeNPMVersion('12.14.0'));
+		expect(await getNPMmatchesNodeLog('12.14.0', '6.0.0')).toMatchObject({
+			error: true,
+			text: logMessages.error.changeNPMVersion('12.14.0'),
+		});
 	});
 	it('should return error-text if we can not receive node-list', async () => {
 		(fetch as any).mockReturnValue(Promise.reject());
-		expect(await getNPMmatchesNodeLog('12.14.0', '6.0.0')).toBe(
-			logMessages.warning.fetchNodeListError(nodeVersionListURL)
-		);
+		expect(await getNPMmatchesNodeLog('12.14.0', '6.0.0')).toMatchObject({
+			error: false,
+			text: logMessages.warning.fetchNodeListError(nodeVersionListURL),
+		});
 	});
 });
 
 describe('getValidVersionLog', () => {
 	it('should return the correct success-text', async () => {
-		expect(await getValidVersionLog('node', '12.14.0', '12.x.x')).toBe(
-			logMessages.success.programVersionSatiesfies('node', '12.14.0', '12.x.x')
-		);
+		expect(await getValidVersionLog('node', '12.14.0', '12.x.x')).toMatchObject({
+			error: false,
+			text: logMessages.success.programVersionSatisfies('node', '12.14.0', '12.x.x'),
+		});
 	});
 	it('should return the correct error-text', async () => {
-		expect(await getValidVersionLog('node', '12.14.0', '10.x.x')).toBe(
-			logMessages.error.changeProgramVersion('node', '12.14.0', '10.x.x')
-		);
+		expect(await getValidVersionLog('node', '12.14.0', '10.x.x')).toMatchObject({
+			error: true,
+			text: logMessages.error.changeProgramVersion('node', '12.14.0', '10.x.x'),
+		});
+	});
+});
+
+describe('processVersionArgument', () => {
+	it('should return the node version', async () => {
+		(execa as any).mockReturnValue(Promise.resolve({ stdout: '12.14.0' }));
+		expect(await processVersionArgument('node=12.14.0')).toMatchObject({
+			error: false,
+			text: logMessages.success.programVersionSatisfies('node', '12.14.0', '12.14.0'),
+		});
+	});
+	it('should return the node version from .node-version file', async () => {
+		(readFile as any).mockReturnValue(Promise.resolve('10.0.0'));
+		(execa as any).mockReturnValue(Promise.resolve({ stdout: '10.0.0' }));
+		expect(await processVersionArgument('node')).toMatchObject({
+			error: false,
+			text: logMessages.success.programVersionSatisfies('node', '10.0.0', '10.0.0'),
+		});
+	});
+	it('should return the yo version', async () => {
+		(execa as any).mockReturnValue(Promise.resolve({ stdout: '3.0.0' }));
+		expect(await processVersionArgument('yo=3.x.x')).toMatchObject({
+			error: false,
+			text: logMessages.success.programVersionSatisfies('yo', '3.0.0', '3.x.x'),
+		});
+	});
+	it('should return a warning for not specifying a yo version', async () => {
+		(execa as any).mockReturnValue(Promise.resolve({ stdout: '3.0.0' }));
+		expect(await processVersionArgument('yo')).toMatchObject({
+			error: false,
+			text: logMessages.warning.specifyProgramVersion('yo', '3.0.0'),
+		});
 	});
 });
 
 describe('getVersionCheckers', () => {
-	it('should return an array of 2 promises', async () => {
-		(execa as any).mockReturnValue(Promise.resolve({ stdout: '' }));
-		expect(await getVersionCheckers(['test'])).toStrictEqual([Promise.resolve(), Promise.resolve()]);
+	it('should resolve two checker promises (specify yo version and npm works with node).', async () => {
+		(fetch as any).mockReturnValue(
+			Promise.resolve(new Response(JSON.stringify([{ version: 'v3.0.0', npm: '3.0.0' }])))
+		);
+		(execa as any).mockReturnValue(Promise.resolve({ stdout: '3.0.0' }));
+		(readFile as any).mockReturnValue(Promise.resolve('3.0.0'));
+		const expectedLogMessages: ILogMessage[] = [
+			{ error: false, text: logMessages.warning.specifyProgramVersion('yo', '3.0.0') },
+			{ error: false, text: logMessages.success.nodeVersionWorksWithNPMVersion('3.0.0', '3.0.0') },
+		];
+		const checkers = await getVersionCheckers(['yo']);
+		expect(await Promise.all(checkers)).toMatchObject(expectedLogMessages);
 	});
-	it('should return an array 2 of promises', async () => {
-		(execa as any).mockReturnValue(Promise.resolve({ stdout: '' }));
-		expect(await getVersionCheckers(['node=12.1.4'])).toStrictEqual([Promise.resolve(), Promise.resolve()]);
-	});
-	it('should return an array 3 of promises', async () => {
-		expect(await getVersionCheckers(['node=12.1.4', 'npm=5.6.1'])).toStrictEqual([
-			Promise.resolve(),
-			Promise.resolve(),
-			Promise.resolve(),
-		]);
-	});
-	it('should return an array 3 of promises 2', async () => {
-		(readFile as any).mockReturnValue(Promise.reject());
-		expect(await getVersionCheckers(['node'])).toStrictEqual([Promise.resolve(), Promise.resolve()]);
+	it('should resolve two checker promises (node version ok and npm works with node)', async () => {
+		(fetch as any).mockReturnValue(
+			Promise.resolve(new Response(JSON.stringify([{ version: 'v3.0.0', npm: '3.0.0' }])))
+		);
+		(execa as any).mockReturnValue(Promise.resolve({ stdout: '3.0.0' }));
+		const expectedLogMessages: ILogMessage[] = [
+			{ error: false, text: logMessages.success.programVersionSatisfies('node', '3.0.0', '3.x.x') },
+			{ error: false, text: logMessages.success.programVersionSatisfies('npm', '3.0.0', '3.x.x') },
+			{ error: false, text: logMessages.success.nodeVersionWorksWithNPMVersion('3.0.0', '3.0.0') },
+		];
+		const checkers = await getVersionCheckers(['node=3.x.x', 'npm=3.x.x']);
+		expect(await Promise.all(checkers)).toMatchObject(expectedLogMessages);
 	});
 });

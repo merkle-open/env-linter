@@ -7,7 +7,7 @@ export const logMessages = {
 			chalk.green(
 				`${logSymbols.success} Your node version ${usedNodeVersion} works with your npm version ${usedNPMVersion}.`
 			),
-		programVersionSatiesfies: (program: string, usedVersion: string, expectedVersion: string) =>
+		programVersionSatisfies: (program: string, usedVersion: string, expectedVersion: string) =>
 			chalk.green(
 				`${logSymbols.success} Your ${program} version ${usedVersion} works with the required version (${expectedVersion}) of your project.`
 			),
@@ -27,6 +27,10 @@ export const logMessages = {
 			chalk.red(`${logSymbols.error} Couldn't find ${file} file in your project root directory.`),
 	},
 	warning: {
+		specifyProgramVersion: (program: string, usedVersion: string) =>
+			chalk.yellow(
+				`${logSymbols.warning} Specify ${program} version! You are using ${usedVersion} but you didn't specify a required version for ${program} in this project.`
+			),
 		fetchNodeListError: (nodeVersionListURL: string) =>
 			chalk.yellow(
 				`${logSymbols.warning} Could not fetch node-list from ${nodeVersionListURL}. Your NPM version might not match your node version.`

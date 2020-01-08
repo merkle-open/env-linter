@@ -23,7 +23,7 @@ export interface INodeVersion {
 	security: boolean;
 }
 
-export interface ILogOutput {
+export interface ILogMessage {
 	error: boolean;
 	text: string;
 }

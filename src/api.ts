@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import { getCwd } from './get-cwd';
 import { getVersionCheckers } from './version-checker';
-import { IOptions } from './const';
+import { IOptions, ILogMessage } from './const';
 
 export interface IApiOptions {
 	cwd?: string;
@@ -18,17 +18,26 @@ export async function api(apiOptions: IApiOptions) {
 	};
 
 	try {
-		const linter: Promise<string>[] = [];
+		const checkers: Promise<ILogMessage>[] = [];
 		if (options.versions) {
-			linter.push(...(await getVersionCheckers(options.versions)));
+			checkers.push(...(await getVersionCheckers(options.versions)));
 		}
 		if (options.hooksInstalled && process.env.NODE_ENV?.toLowerCase() !== 'ci') {
-			// linter.push(checkHooksInstalledChecker());
+			// linter.push(getHooksInstalledChecker());
 		}
 		if (options.saveExact) {
 			// linter.push(getSaveExactChecker());
 		}
-		linter.forEach(async (lint) => console.log(await lint));
+
+		const results = await Promise.all(checkers);
+		const hasErrors = results.reduce((acc, result) => {
+			console.info(result.text);
+			return acc || result.error;
+		}, false);
+		if (hasErrors) {
+			console.error(chalk.red('Stopping any further processes! process.exit(1)'));
+			process.exit(1);
+		}
 	} catch (err) {
 		console.error(chalk.red(err));
 		process.exit(1);
