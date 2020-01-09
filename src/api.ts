@@ -1,6 +1,7 @@
 import chalk from 'chalk';
 import { getCwd } from './get-cwd';
 import { getVersionCheckers } from './version-checker';
+import { getSaveExactChecker } from './save-exact';
 import { IOptions, ILogMessage } from './const';
 
 export interface IApiOptions {
@@ -23,10 +24,10 @@ export async function api(apiOptions: IApiOptions) {
 			checkers.push(...(await getVersionCheckers(options.versions)));
 		}
 		if (options.hooksInstalled && process.env.NODE_ENV?.toLowerCase() !== 'ci') {
-			// linter.push(getHooksInstalledChecker());
+			// checkers.push(getHooksInstalledChecker());
 		}
 		if (options.saveExact) {
-			// linter.push(getSaveExactChecker());
+			checkers.push(getSaveExactChecker());
 		}
 
 		const results = await Promise.all(checkers);

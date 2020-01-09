@@ -11,6 +11,7 @@ export const logMessages = {
 			chalk.green(
 				`${logSymbols.success} Your ${program} version ${usedVersion} works with the required version (${expectedVersion}) of your project.`
 			),
+		saveExactIsOn: () => chalk.green(`${logSymbols.success} NPM save-exact config is set to true.`),
 	},
 	error: {
 		changeNPMVersion: (usedNodeVersion: string) =>
@@ -25,6 +26,8 @@ export const logMessages = {
 			chalk.red(`${logSymbols.error} Error when executing '${program} --version'. Is ${program} installed?`),
 		readNodeVersionFileError: (file: string) =>
 			chalk.red(`${logSymbols.error} Couldn't find ${file} file in your project root directory.`),
+		saveExactIsOffError: () =>
+			chalk.red(`${logSymbols.error} Set save-exact to true with "npm config set save-exact true".`),
 	},
 	warning: {
 		specifyProgramVersion: (program: string, usedVersion: string) =>
