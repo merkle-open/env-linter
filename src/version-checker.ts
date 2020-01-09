@@ -55,6 +55,9 @@ export const getVersionCheckers = async (versionArguments: string[]) => {
 	);
 	const usedNodeVersion: ILogMessage = await getInstalledVersion('node');
 	const usedNPMVersion: ILogMessage = await getInstalledVersion('npm');
+	if (!versionArguments.length && !usedNPMVersion.error) {
+		versionChecks.push(getValidNodeVersionLog(usedNodeVersion));
+	}
 	if (usedNodeVersion.error || usedNPMVersion.error) {
 		const usedVersionError: ILogMessage = usedNodeVersion.error
 			? { error: true, text: usedNodeVersion.text }
