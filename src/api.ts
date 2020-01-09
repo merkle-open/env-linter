@@ -3,6 +3,7 @@ import { getCwd } from './get-cwd';
 import { getVersionCheckers } from './version-checker';
 import { getSaveExactChecker } from './save-exact';
 import { IOptions, ILogMessage } from './const';
+import { getHooksInstalledChecker } from './hooks-installed';
 
 export interface IApiOptions {
 	cwd?: string;
@@ -24,7 +25,7 @@ export async function api(apiOptions: IApiOptions) {
 			checkers.push(...(await getVersionCheckers(options.versions)));
 		}
 		if (options.hooksInstalled && process.env.NODE_ENV?.toLowerCase() !== 'ci') {
-			// checkers.push(getHooksInstalledChecker());
+			checkers.push(getHooksInstalledChecker());
 		}
 		if (options.saveExact) {
 			checkers.push(getSaveExactChecker());

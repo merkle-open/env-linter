@@ -18,13 +18,13 @@ export const getNPMmatchesNodeLog = async (usedNodeVersion: string, usedNPMVersi
 	}
 	return isNPMandNodeMatching(JSON.parse(nodeList.text), usedNodeVersion, usedNPMVersion)
 		? { error: false, text: logMessages.success.nodeVersionWorksWithNPMVersion(usedNodeVersion, usedNPMVersion) }
-		: { error: true, text: logMessages.error.changeNPMVersion(usedNodeVersion) };
+		: { error: true, text: logMessages.error.wrongNPMVersionError(usedNodeVersion) };
 };
 
 export const getValidVersionLog = async (program: string, usedVersion: string, expectedVersion: string) => {
 	return semver.satisfies(usedVersion, expectedVersion)
 		? { error: false, text: logMessages.success.programVersionSatisfies(program, usedVersion, expectedVersion) }
-		: { error: true, text: logMessages.error.changeProgramVersion(program, usedVersion, expectedVersion) };
+		: { error: true, text: logMessages.error.wrongProgramVersionError(program, usedVersion, expectedVersion) };
 };
 
 export const getValidNodeVersionLog = async (usedNodeVersion: ILogMessage) => {

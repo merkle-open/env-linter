@@ -12,13 +12,14 @@ export const logMessages = {
 				`${logSymbols.success} Your ${program} version ${usedVersion} works with the required version (${expectedVersion}) of your project.`
 			),
 		saveExactIsOn: () => chalk.green(`${logSymbols.success} NPM save-exact config is set to true.`),
+		gitHooksAreInstalled: () => chalk.green(`${logSymbols.success} Git hooks are installed.`),
 	},
 	error: {
-		changeNPMVersion: (usedNodeVersion: string) =>
+		wrongNPMVersionError: (usedNodeVersion: string) =>
 			chalk.red(
-				`${logSymbols.error} Change npm version! You are using node ${usedNodeVersion}, keep node and npm in sync!`
+				`${logSymbols.error} Change npm version! You are using node ${usedNodeVersion}, keep node and npm in sync! https://nodejs.org/dist/index.json`
 			),
-		changeProgramVersion: (program: string, usedVersion: string, expectedVersion: string) =>
+		wrongProgramVersionError: (program: string, usedVersion: string, expectedVersion: string) =>
 			chalk.red(
 				`${logSymbols.error} Change ${program} version! You are using ${usedVersion} but your project requires ${expectedVersion}.`
 			),
@@ -28,6 +29,8 @@ export const logMessages = {
 			chalk.red(`${logSymbols.error} Couldn't find ${file} file in your project root directory.`),
 		saveExactIsOffError: () =>
 			chalk.red(`${logSymbols.error} Set save-exact to true with "npm config set save-exact true".`),
+		gitHooksNotInstalledError: () =>
+			chalk.red(`${logSymbols.error} Git hooks are not installed. Install with "npm init".`),
 	},
 	warning: {
 		specifyProgramVersion: (program: string, usedVersion: string) =>

@@ -44,7 +44,7 @@ describe('getNPMmatchesNodeLog', () => {
 		(fetch as any).mockReturnValue(Promise.resolve(new Response(JSON.stringify(exampleNodeList))));
 		expect(await getNPMmatchesNodeLog('12.14.0', '6.0.0')).toMatchObject({
 			error: true,
-			text: logMessages.error.changeNPMVersion('12.14.0'),
+			text: logMessages.error.wrongNPMVersionError('12.14.0'),
 		});
 	});
 	it('should return error-text if we can not receive node-list', async () => {
@@ -66,7 +66,7 @@ describe('getValidVersionLog', () => {
 	it('should return the correct error-text', async () => {
 		expect(await getValidVersionLog('node', '12.14.0', '10.x.x')).toMatchObject({
 			error: true,
-			text: logMessages.error.changeProgramVersion('node', '12.14.0', '10.x.x'),
+			text: logMessages.error.wrongProgramVersionError('node', '12.14.0', '10.x.x'),
 		});
 	});
 });
