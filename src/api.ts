@@ -4,6 +4,7 @@ import { getVersionCheckers } from './version-checker';
 import { getSaveExactChecker } from './save-exact';
 import { IOptions, ILogMessage } from './const';
 import { getHooksInstalledChecker } from './hooks-installed';
+import { splitVersions } from './fetch-options';
 
 export interface IApiOptions {
 	cwd?: string;
@@ -16,7 +17,9 @@ export async function api(apiOptions: IApiOptions) {
 	const cwd = await getCwd();
 	const options: IOptions = {
 		cwd,
-		...apiOptions,
+		versions: splitVersions(apiOptions.versions),
+		hooksInstalled: apiOptions.hooksInstalled,
+		saveExact: apiOptions.saveExact,
 	};
 
 	try {
@@ -27,7 +30,7 @@ export async function api(apiOptions: IApiOptions) {
 		if (options.hooksInstalled && process.env.NODE_ENV?.toLowerCase() !== 'ci') {
 			checkers.push(getHooksInstalledChecker());
 		}
-		if (options.saveExact) {
+		if (options.saveExact && process.env.NODE_ENV?.toLowerCase() !== 'ci') {
 			checkers.push(getSaveExactChecker());
 		}
 

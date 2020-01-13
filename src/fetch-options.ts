@@ -2,15 +2,33 @@ import { Command } from 'commander';
 import { getCwd } from './get-cwd';
 import { IProgram, IOptions } from './const';
 
+export const splitVersions = (versions: string | string[] | undefined) => {
+	if (typeof versions === 'object') {
+		return versions;
+	}
+	const versionsFallback = versions !== undefined ? [] : undefined;
+	return typeof versions === 'string' ? versions.split(',') : versionsFallback;
+};
+
 async function transformAnswersToOptions({ versions, hooksInstalled, saveExact }: IProgram): Promise<IOptions> {
-	const cwd = await getCwd();
-	const hasVersionsArg = versions ? [] : undefined;
-	return {
-		cwd,
-		versions: typeof versions === 'string' ? versions.split(',') : hasVersionsArg,
-		hooksInstalled,
-		saveExact,
-	};
+	try {
+		const cwd = await getCwd();
+		const versionsSplit = splitVersions(versions);
+		return {
+			cwd,
+			versions: versionsSplit,
+			hooksInstalled,
+			saveExact,
+		};
+	} catch (err) {
+		console.error(err);
+		return {
+			cwd: '',
+			versions: undefined,
+			hooksInstalled: false,
+			saveExact: false,
+		};
+	}
 }
 
 export async function fetchOptions(): Promise<IOptions> {
