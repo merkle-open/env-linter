@@ -30,7 +30,7 @@ export const logMessages = {
 		saveExactIsOffError: () =>
 			chalk.red(`${logSymbols.error} Set save-exact to true with "npm config set save-exact true".`),
 		gitHooksNotInstalledError: () =>
-			chalk.red(`${logSymbols.error} Git hooks are not installed. Install with "npm init".`),
+			chalk.red(`${logSymbols.error} Git hooks are not installed. Install with "npm i -D husky".`),
 	},
 	warning: {
 		specifyProgramVersion: (program: string, usedVersion: string) =>
