@@ -13,25 +13,14 @@
 
 ## Usage
 
-```shell
-npx @namics/env-linter --versions="node=12.x.x,npm=6.x.x"
-```
-
-```shell
-npx @namics/env-linter --hooksInstalled
-```
-
-```shell
-npx @namics/env-linter --saveExact
-```
-
 ```json
-Usage:
-
-Options:
-  -vs, --versions [string]              versions of global packages eg. node, npm, ...
-  -h, --hooksInstalled                  check for hooks are installed, failes if not
-  -s, --saveExact                       check for npm save-exact enabled, failes if not
+{
+	"postinstall": "env-linter --hooksInstalled --saveExact --versions 'node=12.x.x,npm=6.x.x'",
+	"prestart": "env-linter --versions 'node=12.x.x,npm=6.x.x'",
+	"lint-staged": {
+		"**/package.json": ["env-linter --saveExact"]
+	}
+}
 ```
 
 ## API usage
@@ -45,6 +34,26 @@ await api({
 	saveExact: true,
 });
 ```
+
+## Options
+
+### -vs, --versions [string]
+
+Checks the installed versions of global packages or programs like node, npm, yo, etc. against a required version.
+For example calling `env-linter --versions 'node=12.x.x'` will assure that version 12 of node is being used.
+env-linter will stop any further process-execution if a package or program does not satisfy the required version.
+
+Calling env-linter with `--versions` but without any arguments will compare the installed node-version with the node-version from the .node-version file.
+
+In any case, the used node version is compared to the list of [official node-releases](https://nodejs.org/dist/index.json) and process-execution is stopped if the used npm version is older than the npm version that node comes with. This is a combination that can only occur with certain node-version managers.
+
+### -h, --hooksInstalled
+
+Checks if git-hooks are installed (i.e. husky installed). env-linter will stop any further process-execution if git-hooks are not installed.
+
+### -s, --saveExact
+
+Checks if the npm option `save-exact` is enabled, either through a .npmrc file in the project or in the user-directory. env-linter will stop any further process-execution if save-exact is disabled.
 
 ## License
 
