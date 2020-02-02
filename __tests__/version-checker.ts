@@ -25,10 +25,13 @@ const exampleNodeList = [{ version: 'v12.14.0', date: '2019-12-16', npm: '6.13.4
 const nodeVersionListURL = 'https://nodejs.org/dist/index.json';
 
 describe('isNPMandNodeMatching', () => {
-	it('should return true when node and npm version match', async () => {
+	it('should return true because node and npm version match', async () => {
 		expect(isNPMandNodeMatching(exampleNodeList, '12.14.0', '6.13.4')).toBeTruthy();
 	});
-	it('should return false when node and npm version do not match', async () => {
+	it('should return true because used npm-version is newer than the npm-version that node comes with)', async () => {
+		expect(isNPMandNodeMatching(exampleNodeList, '12.14.0', '6.13.5')).toBeTruthy();
+	});
+	it('should return false because used npm-version is older than the npm-version that node comes with', async () => {
 		expect(isNPMandNodeMatching(exampleNodeList, '12.14.0', '6.12.1')).toBeFalsy();
 	});
 });

@@ -7,7 +7,7 @@ import { logMessages } from './log-messages';
 
 export const isNPMandNodeMatching = (nodeList: INodeVersion[], usedNodeVersion: string, usedNPMVersion: string) => {
 	return nodeList.some((nodeVersion) => {
-		return nodeVersion.version.slice(1) === usedNodeVersion && nodeVersion.npm === usedNPMVersion;
+		return nodeVersion.version.slice(1) === usedNodeVersion && semver.gte(usedNPMVersion, nodeVersion.npm);
 	});
 };
 
