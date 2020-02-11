@@ -27,3 +27,14 @@ export interface ILogMessage {
 	error: boolean;
 	text: string;
 }
+
+export interface IPackage {
+	name: string;
+	version: string;
+	scripts?: Record<string, string>;
+	dependencies?: Record<string, string>;
+	devDependencies?: Record<string, string>;
+	peerDependencies?: Record<string, string>;
+}
+
+export type PackageDependencyKeys = 'dependencies' | 'devDependencies';

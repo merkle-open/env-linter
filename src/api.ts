@@ -5,6 +5,7 @@ import { getSaveExactChecker } from './save-exact';
 import { IOptions, ILogMessage } from './const';
 import { getHooksInstalledChecker } from './hooks-installed';
 import { splitVersions } from './fetch-options';
+import { getExactDependencyVersionsChecker } from './exact-dependency-versions';
 
 export interface IApiOptions {
 	cwd?: string;
@@ -32,6 +33,7 @@ export async function api(apiOptions: IApiOptions) {
 		}
 		if (options.saveExact && process.env.NODE_ENV?.toLowerCase() !== 'ci') {
 			checkers.push(getSaveExactChecker());
+			checkers.push(getExactDependencyVersionsChecker());
 		}
 
 		const results = await Promise.all(checkers);

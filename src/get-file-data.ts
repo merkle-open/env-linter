@@ -7,7 +7,7 @@ export const getFileData = async (filePath: string) => {
 	return (await fs.readFile(pathName, 'utf8')).trim();
 };
 
-export const getNodeVersionFromFile = async (file) => {
+export const getNodeVersionFromFile = async (file: string) => {
 	try {
 		return { error: false, text: await getFileData(file) };
 	} catch (err) {
