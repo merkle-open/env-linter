@@ -4,6 +4,7 @@ export interface IOptions {
 	versions?: string[];
 	hooksInstalled?: boolean;
 	saveExact?: boolean;
+	dependenciesExactVersion?: boolean;
 }
 
 export interface IProgram {
@@ -11,6 +12,7 @@ export interface IProgram {
 	versions?: string;
 	hooksInstalled?: boolean;
 	saveExact?: boolean;
+	dependenciesExactVersion?: boolean;
 	// commander
 	rawArgs: string[];
 	args: string[];

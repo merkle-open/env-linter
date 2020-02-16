@@ -34,8 +34,11 @@ export const logMessages = {
 			chalk.red(`${logSymbols.error} Set save-exact to true with "npm config set save-exact true".`),
 		gitHooksNotInstalledError: () =>
 			chalk.red(`${logSymbols.error} Git hooks are not installed. Install with "npm i -D husky".`),
-		allDependenciesExact: (type: PackageDependencyKeys, errorStack: string) =>
-			chalk.red(`${logSymbols.error} Not all ${type} have been declared by exact version(s).${errorStack}`),
+		noPackagesFound: (cwd: string) => chalk.red(`${logSymbols.error} No packages in "${cwd}" found`),
+		allDependenciesExact: (type: PackageDependencyKeys, pkgName: string, errorStack: string) =>
+			chalk.red(
+				`${logSymbols.error} Not all ${type} in ${pkgName} have been declared by exact version(s).${errorStack}`
+			),
 		versionDefinition: {
 			starWildcard: () => 'Wildcard "*" is not allowed as version declaration',
 			approximate: (declaration: string) => `Approximate version identifier "${declaration}" is not allowed`,

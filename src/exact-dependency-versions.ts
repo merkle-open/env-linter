@@ -1,5 +1,6 @@
-import { getFileData } from './get-file-data';
+import findPackages from 'find-packages';
 import { logMessages } from './log-messages';
+import { getCwd } from './get-cwd';
 import { IPackage, PackageDependencyKeys, ILogMessage } from './const';
 
 export interface IVersionValidationResult {
@@ -7,16 +8,25 @@ export interface IVersionValidationResult {
 	text?: string;
 }
 
+export interface IDetailedVersionValidationResult extends IVersionValidationResult {
+	invalidDefinitions: IVersionValidationResult[];
+}
+
+export interface IPackageValidationResult {
+	dependencies: IDetailedVersionValidationResult;
+	devDependencies: IDetailedVersionValidationResult;
+}
+
 /**
  * Checks if a version definition is valid compared to our exact ruleset
- * @param {string} v					The version as plain string extracted from the package, eg. ^1.2.0
+ * @param {string} version				The version as plain string extracted from the package, eg. ^1.2.0
  * @returns {IVersionValidationResult}	Validation result
  */
-const validateVersion = (v: string): IVersionValidationResult => {
-	const [leadChar] = v;
+const validateVersion = (version: string): IVersionValidationResult => {
+	const [leadChar] = version;
 
 	// Star wildcard is not allowed at all
-	if (v === '*') {
+	if (version === '*') {
 		return {
 			error: true,
 			text: logMessages.error.versionDefinition.starWildcard(),
@@ -32,10 +42,10 @@ const validateVersion = (v: string): IVersionValidationResult => {
 	}
 
 	// Tarball embedds are not allowed, eg. https://github.com/indexzero/forever/tarball/v0.5.6
-	if (v.indexOf('http') > -1) {
+	if (version.indexOf('http') > -1) {
 		return {
 			error: true,
-			text: logMessages.error.versionDefinition.tarball(v),
+			text: logMessages.error.versionDefinition.tarball(version),
 		};
 	}
 
@@ -44,11 +54,16 @@ const validateVersion = (v: string): IVersionValidationResult => {
 
 /**
  * Checks a single dependency record and its entries against the definition rules
+ * @param {string?} pkgName					The package name
  * @param {PackageDependencyKeys} type 		Named dependency field type
  * @param {Record<string, string>} deps 	Dependency records
  * @returns {IVersionValidationResult} 		Validation result
  */
-const validateDependenciesRecord = (type: PackageDependencyKeys, deps: Record<string, string> = {}) => {
+const validateDependenciesRecord = (
+	pkgName = 'package',
+	type: PackageDependencyKeys,
+	deps: Record<string, string> = {}
+): IDetailedVersionValidationResult => {
 	const validationResults = Object.keys(deps).map((dep) => {
 		const validationResult = validateVersion(deps[dep]);
 
@@ -64,27 +79,57 @@ const validateDependenciesRecord = (type: PackageDependencyKeys, deps: Record<st
 
 	return invalidDefinitions.length === 0
 		? { error: false, text: logMessages.success.allDependenciesExact(type), invalidDefinitions }
-		: { error: true, text: logMessages.error.allDependenciesExact(type, errorStack), invalidDefinitions };
+		: { error: true, text: logMessages.error.allDependenciesExact(type, pkgName, errorStack), invalidDefinitions };
 };
 
 /**
- * Checks if the package.json of the project only contains valid versions
- * @returns {{ dependencies: IVersionValidationResult, devDependencies: IVersionValidationResult }} The validation results
+ * Wrapper to validate a complete package which calls other internal methods
+ * @param {IPackage | findPackages.Project} pkgOrProject  	The package or project
+ * @returns {IPackageValidationResult} The validation results
  */
-export const validateDependenciesVersionsAreExact = async () => {
-	const packageContents = await getFileData('package.json');
-	const pkg: IPackage = JSON.parse(packageContents);
+export const validatePackage = (pkgOrProject: IPackage | findPackages.Project): IPackageValidationResult => {
+	const pkg = 'manifest' in pkgOrProject ? pkgOrProject.manifest : pkgOrProject;
 
 	return {
-		dependencies: validateDependenciesRecord('dependencies', pkg.dependencies),
-		devDependencies: validateDependenciesRecord('devDependencies', pkg.devDependencies),
+		dependencies: validateDependenciesRecord(pkg.name, 'dependencies', pkg.dependencies),
+		devDependencies: validateDependenciesRecord(pkg.name, 'devDependencies', pkg.devDependencies),
 	};
 };
 
+/**
+ * Searches all package.json's from the passed CWD and validates them
+ * @param {string} cwd						The current working directory
+ * @returns {IPackageValidationResult[]}	The validation results
+ */
+export const validateDependenciesVersionsAreExact = async (cwd: string) => {
+	const pkgs = await findPackages(cwd, {
+		includeRoot: true,
+		ignore: [],
+	});
+
+	return pkgs.map((pkg) => validatePackage(pkg));
+};
+
 export const getExactDependencyVersionsChecker = async (): Promise<ILogMessage> => {
-	const { dependencies, devDependencies } = await validateDependenciesVersionsAreExact();
-	const error = dependencies.error || devDependencies.error;
-	const text = [dependencies.text, devDependencies.text].filter(Boolean).join('\n');
+	const cwd = await getCwd();
+	const validations = await validateDependenciesVersionsAreExact(cwd);
+
+	if (validations.length === 0) {
+		return {
+			error: true,
+			text: logMessages.error.noPackagesFound(cwd),
+		};
+	}
+
+	const aggregatedValidations = validations.map(({ dependencies, devDependencies }) => ({
+		error: dependencies.error || devDependencies.error,
+		text: [dependencies.text, devDependencies.text].filter(Boolean).join('\n'),
+	}));
+	const error = aggregatedValidations.some((validation) => validation.error === true);
+	const text = aggregatedValidations
+		.map((validation) => validation.text)
+		.filter(Boolean)
+		.join('\n');
 
 	return {
 		error,
