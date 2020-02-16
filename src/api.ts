@@ -17,7 +17,7 @@ export interface IApiOptions {
 
 export async function api(apiOptions: IApiOptions) {
 	const cwd = await getCwd();
-	const RUNNING_NOT_IN_CI = process.env.NODE_ENV?.toLowerCase() !== 'ci';
+	const NOT_RUNNING_IN_CI = process.env.NODE_ENV?.toLowerCase() !== 'ci';
 	const options: IOptions = {
 		cwd,
 		versions: splitVersions(apiOptions.versions),
@@ -28,16 +28,20 @@ export async function api(apiOptions: IApiOptions) {
 
 	try {
 		const checkers: Promise<ILogMessage>[] = [];
+
 		if (options.versions) {
 			checkers.push(...(await getVersionCheckers(options.versions)));
 		}
-		if (options.hooksInstalled && RUNNING_NOT_IN_CI) {
+
+		if (options.hooksInstalled && NOT_RUNNING_IN_CI) {
 			checkers.push(getHooksInstalledChecker());
 		}
-		if (options.saveExact && RUNNING_NOT_IN_CI) {
+
+		if (options.saveExact && NOT_RUNNING_IN_CI) {
 			checkers.push(getSaveExactChecker());
 		}
-		if (options.dependenciesExactVersion && RUNNING_NOT_IN_CI) {
+
+		if (options.dependenciesExactVersion && NOT_RUNNING_IN_CI) {
 			checkers.push(getExactDependencyVersionsChecker());
 		}
 
@@ -46,12 +50,13 @@ export async function api(apiOptions: IApiOptions) {
 			console.info(result.text);
 			return acc || result.error;
 		}, false);
+
 		if (hasErrors) {
 			console.error(chalk.red('Stopping any further processes! process.exit(1)'));
 			process.exit(1);
 		}
 	} catch (err) {
 		console.error(chalk.red(err));
-		process.exit(1);
+		process.exit(2);
 	}
 }
