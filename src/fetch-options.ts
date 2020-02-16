@@ -40,6 +40,7 @@ export async function fetchOptions(): Promise<IOptions> {
 		.option('-vs, --versions [string]', 'check versions of global packages eg. node, npm, ...')
 		.option('-h, --hooksInstalled', 'check if hooks are installed, failes if not')
 		.option('-s, --saveExact', 'check if npm save-exact enabled, failes if not')
+		.option('-d, --dependenciesExactVersion', 'check if all dependencies are installed in an exact version')
 		.parse(process.argv) as any) as IProgram;
 
 	return await transformAnswersToOptions(pg);

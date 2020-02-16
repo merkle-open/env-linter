@@ -12,15 +12,18 @@ export interface IApiOptions {
 	versions?: string[];
 	hooksInstalled?: boolean;
 	saveExact?: boolean;
+	dependenciesExactVersion?: boolean;
 }
 
 export async function api(apiOptions: IApiOptions) {
 	const cwd = await getCwd();
+	const RUNNING_NOT_IN_CI = process.env.NODE_ENV?.toLowerCase() !== 'ci';
 	const options: IOptions = {
 		cwd,
 		versions: splitVersions(apiOptions.versions),
 		hooksInstalled: apiOptions.hooksInstalled,
 		saveExact: apiOptions.saveExact,
+		dependenciesExactVersion: apiOptions.dependenciesExactVersion,
 	};
 
 	try {
@@ -28,11 +31,13 @@ export async function api(apiOptions: IApiOptions) {
 		if (options.versions) {
 			checkers.push(...(await getVersionCheckers(options.versions)));
 		}
-		if (options.hooksInstalled && process.env.NODE_ENV?.toLowerCase() !== 'ci') {
+		if (options.hooksInstalled && RUNNING_NOT_IN_CI) {
 			checkers.push(getHooksInstalledChecker());
 		}
-		if (options.saveExact && process.env.NODE_ENV?.toLowerCase() !== 'ci') {
+		if (options.saveExact && RUNNING_NOT_IN_CI) {
 			checkers.push(getSaveExactChecker());
+		}
+		if (options.dependenciesExactVersion && RUNNING_NOT_IN_CI) {
 			checkers.push(getExactDependencyVersionsChecker());
 		}
 
