@@ -19,8 +19,8 @@ export interface IPackageValidationResult {
 
 /**
  * Checks if a version definition is valid compared to our exact ruleset
- * @param {string} version				The version as plain string extracted from the package, eg. ^1.2.0
- * @returns {IVersionValidationResult}	Validation result
+ * @param {string} version The version as plain string extracted from the package, eg. ^1.2.0
+ * @returns {IVersionValidationResult} Validation result
  */
 const validateVersion = (version: string): IVersionValidationResult => {
 	const [leadChar] = version;
@@ -54,10 +54,10 @@ const validateVersion = (version: string): IVersionValidationResult => {
 
 /**
  * Checks a single dependency record and its entries against the definition rules
- * @param {string?} pkgName					The package name
- * @param {PackageDependencyKeys} type 		Named dependency field type
- * @param {Record<string, string>} deps 	Dependency records
- * @returns {IVersionValidationResult} 		Validation result
+ * @param {string?} pkgName The package name
+ * @param {PackageDependencyKeys} type Named dependency field type
+ * @param {Record<string, string>} deps Dependency records
+ * @returns {IVersionValidationResult} Validation result
  */
 const validateDependenciesRecord = (
 	pkgName = 'package',
@@ -84,7 +84,7 @@ const validateDependenciesRecord = (
 
 /**
  * Wrapper to validate a complete package which calls other internal methods
- * @param {IPackage | findPackages.Project} pkgOrProject  	The package or project
+ * @param {IPackage | findPackages.Project} pkgOrProject The package or project
  * @returns {IPackageValidationResult} The validation results
  */
 export const validatePackage = (pkgOrProject: IPackage | findPackages.Project): IPackageValidationResult => {
@@ -98,8 +98,8 @@ export const validatePackage = (pkgOrProject: IPackage | findPackages.Project): 
 
 /**
  * Searches all package.json's from the passed CWD and validates them
- * @param {string} cwd						The current working directory
- * @returns {IPackageValidationResult[]}	The validation results
+ * @param {string} cwd The current working directory
+ * @returns {IPackageValidationResult[]} The validation results
  */
 export const validateDependenciesVersionsAreExact = async (cwd: string) => {
 	const pkgs = await findPackages(cwd, {
