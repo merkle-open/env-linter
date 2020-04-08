@@ -58,7 +58,7 @@ Checks if the npm option `save-exact` is enabled, either through a .npmrc file i
 
 ### -d, --dependenciesExactVersion
 
-Checkes if the version definitions of the dependencies and devDependencies in the `package.json` (or in a monorepository all available packages) are fitting our standards, which means; no approximate versions eg. tilde `~` or caret `^`, no star `*` wildcard and no tarball embedds via `https://*`.
+Checks if the version definitions of the dependencies and devDependencies in the `package.json` (or in a monorepository all available packages) are fitting our standards, which means; no approximate versions eg. tilde `~` or caret `^`, no star `*` wildcard and no tarball embeds via `https://*`.
 
 ## License
 
