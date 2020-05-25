@@ -29,7 +29,7 @@ const validateVersion = (version: string): IVersionValidationResult => {
 	if (version === '*') {
 		return {
 			error: true,
-			text: logMessages.error.versionDefinition.starWildcard(),
+			text: logMessages.error.starWildcardVersionError(),
 		};
 	}
 
@@ -37,7 +37,7 @@ const validateVersion = (version: string): IVersionValidationResult => {
 	if (leadChar === '~' || leadChar === '^') {
 		return {
 			error: true,
-			text: logMessages.error.versionDefinition.approximate(leadChar),
+			text: logMessages.error.approximateVersionError(leadChar),
 		};
 	}
 
@@ -45,7 +45,7 @@ const validateVersion = (version: string): IVersionValidationResult => {
 	if (version.indexOf('http') > -1) {
 		return {
 			error: true,
-			text: logMessages.error.versionDefinition.tarball(version),
+			text: logMessages.error.tarballVersionError(version),
 		};
 	}
 
@@ -78,8 +78,12 @@ const validateDependenciesRecord = (
 	const errorStack = invalidDefinitions.map((validation) => `\n\t- ${validation.text}`).join('');
 
 	return invalidDefinitions.length === 0
-		? { error: false, text: logMessages.success.allDependenciesExact(type), invalidDefinitions }
-		: { error: true, text: logMessages.error.allDependenciesExact(type, pkgName, errorStack), invalidDefinitions };
+		? { error: false, text: logMessages.success.allDependenciesExact(type, pkgName), invalidDefinitions }
+		: {
+				error: true,
+				text: logMessages.error.notAllDependenciesExactError(type, pkgName, errorStack),
+				invalidDefinitions,
+		  };
 };
 
 /**
