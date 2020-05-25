@@ -1,5 +1,6 @@
 import chalk from 'chalk';
 import logSymbols from 'log-symbols';
+import { PackageDependencyKeys } from './const';
 
 export const logMessages = {
 	success: {
@@ -13,6 +14,10 @@ export const logMessages = {
 			),
 		saveExactIsOn: () => chalk.green(`${logSymbols.success} NPM save-exact config is set to true.`),
 		gitHooksAreInstalled: () => chalk.green(`${logSymbols.success} Git hooks are installed.`),
+		allDependenciesExact: (type: PackageDependencyKeys, pkgName: string) =>
+			chalk.green(
+				`${logSymbols.success} All ${type} in ${pkgName} have been installed by exact version definition.`
+			),
 	},
 	error: {
 		wrongNPMVersionError: (usedNodeVersion: string) =>
@@ -31,6 +36,15 @@ export const logMessages = {
 			chalk.red(`${logSymbols.error} Set save-exact to true with "npm config set save-exact true".`),
 		gitHooksNotInstalledError: () =>
 			chalk.red(`${logSymbols.error} Git hooks are not installed. Install with "npm i -D husky".`),
+		noPackagesFoundError: (cwd: string) => chalk.red(`${logSymbols.error} No packages in "${cwd}" found.`),
+		notAllDependenciesExactError: (type: PackageDependencyKeys, pkgName: string, errorStack: string) =>
+			chalk.red(
+				`${logSymbols.error} Not all ${type} in ${pkgName} have been declared by exact version(s).${errorStack}`
+			),
+		starWildcardVersionError: () => 'Wildcard "*" is not allowed as version declaration.',
+		approximateVersionError: (declaration: string) =>
+			`Approximate version identifier "${declaration}" is not allowed.`,
+		tarballVersionError: (url: string) => `Tarball dependencies are not allowed (${url}).`,
 	},
 	warning: {
 		specifyProgramVersion: (program: string, usedVersion: string) =>

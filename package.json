@@ -19,7 +19,8 @@
   },
   "contributors": [
     "Simon Mollweide <simon.mollweide@namics.com>",
-    "Jörg Egli <joerg.egli@namics.com>"
+    "Jörg Egli <joerg.egli@namics.com>",
+    "Jan Biasi <jan.biasi@namics.com>"
   ],
   "devDependencies": {
     "@commitlint/cli": "8.3.5",
@@ -50,6 +51,7 @@
     "eslint": "6.8.0",
     "eslint-plugin-import": "2.20.2",
     "execa": "4.0.0",
+    "find-packages": "7.0.6",
     "fs-extra": "9.0.0",
     "husky": "4.2.3",
     "jest": "25.3.0",

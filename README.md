@@ -32,6 +32,7 @@ await api({
 	versions: 'node=12.x.x,npm=6.x.x',
 	hooksInstalled: true,
 	saveExact: true,
+	dependenciesExactVersion: true,
 });
 ```
 
@@ -54,6 +55,10 @@ Checks if git-hooks are installed (i.e. husky installed). env-linter will stop a
 ### -s, --saveExact
 
 Checks if the npm option `save-exact` is enabled, either through a .npmrc file in the project or in the user-directory. env-linter will stop any further process-execution if save-exact is disabled.
+
+### -d, --dependenciesExactVersion
+
+Checks if the version definitions of the dependencies and devDependencies in the `package.json` (or in a monorepository all available packages) are fitting our standards, which means; no approximate versions eg. tilde `~` or caret `^`, no star `*` wildcard and no tarball embeds via `https://*`.
 
 ## License
 

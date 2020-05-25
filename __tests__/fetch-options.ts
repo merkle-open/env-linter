@@ -1,7 +1,6 @@
 /// <reference types="@types/jest" />
 jest.mock('fs-extra');
 import { realpath } from 'fs-extra';
-
 import { fetchOptions, splitVersions } from '../src/fetch-options';
 
 describe('fetch-options', () => {
@@ -12,6 +11,7 @@ describe('fetch-options', () => {
 			'--versions=node=12.14.0,npm=6.4.1',
 			'--hooksInstalled',
 			'--saveExact',
+			'--dependenciesExactVersion',
 		];
 		const options = await fetchOptions();
 		delete options.cwd;
@@ -19,6 +19,7 @@ describe('fetch-options', () => {
 			versions: ['node=12.14.0', 'npm=6.4.1'],
 			hooksInstalled: true,
 			saveExact: true,
+			dependenciesExactVersion: true,
 		});
 	});
 	it('with empty versions', async () => {
@@ -28,10 +29,12 @@ describe('fetch-options', () => {
 			'--versions',
 			'--hooksInstalled',
 			'--saveExact',
+			'--dependenciesExactVersion',
 		];
 		const options = await fetchOptions();
 		delete options.cwd;
 		expect(options).toEqual({
+			dependenciesExactVersion: true,
 			hooksInstalled: true,
 			saveExact: true,
 			versions: [],
@@ -51,6 +54,7 @@ describe('fetch-options', () => {
 		(realpath as any).mockReturnValue(Promise.reject('example-error from fs.realpath'));
 		expect(await fetchOptions()).toEqual({
 			cwd: '',
+			dependenciesExactVersion: false,
 			hooksInstalled: false,
 			saveExact: false,
 			versions: undefined,
