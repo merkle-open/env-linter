@@ -1,7 +1,7 @@
 import findPackages from 'find-packages';
 import { logMessages } from './log-messages';
 import { getCwd } from './get-cwd';
-import { IPackage, PackageDependencyKeys, ILogMessage } from './const';
+import { PackageDependencyKeys, ILogMessage, IPackage, IProject } from './const';
 
 export interface IVersionValidationResult {
 	error: boolean;
@@ -84,10 +84,10 @@ const validateDependenciesRecord = (
 
 /**
  * Wrapper to validate a complete package which calls other internal methods
- * @param {IPackage | findPackages.Project} pkgOrProject The package or project
+ * @param {IPackage | IProject} pkgOrProject The package or project
  * @returns {IPackageValidationResult} The validation results
  */
-export const validatePackage = (pkgOrProject: IPackage | findPackages.Project): IPackageValidationResult => {
+export const validatePackage = (pkgOrProject: IPackage | IProject): IPackageValidationResult => {
 	const pkg = 'manifest' in pkgOrProject ? pkgOrProject.manifest : pkgOrProject;
 
 	return {

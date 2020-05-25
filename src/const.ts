@@ -1,3 +1,5 @@
+import { ProjectManifest } from '@pnpm/types';
+
 // define cli api by using commander
 export interface IOptions {
 	cwd: string;
@@ -37,6 +39,11 @@ export interface IPackage {
 	dependencies?: Record<string, string>;
 	devDependencies?: Record<string, string>;
 	peerDependencies?: Record<string, string>;
+}
+
+export interface IProject {
+	dir: string;
+	manifest: ProjectManifest;
 }
 
 export type PackageDependencyKeys = 'dependencies' | 'devDependencies';
