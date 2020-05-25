@@ -104,7 +104,7 @@ export const validatePackage = (pkgOrProject: IPackage | IProject): IPackageVali
 export const validateDependenciesVersionsAreExact = async (cwd: string) => {
 	const pkgs = await findPackages(cwd, {
 		includeRoot: true,
-		ignore: [],
+		ignore: ['node_modules'],
 	});
 
 	return pkgs.map((pkg) => validatePackage(pkg));
