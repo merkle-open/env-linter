@@ -98,13 +98,13 @@ export const validatePackage = (pkgOrProject: IPackage | IProject): IPackageVali
 
 /**
  * Searches all package.json's from the passed CWD and validates them
+ * except those package.json's that are within a node_modules folder
  * @param {string} cwd The current working directory
  * @returns {IPackageValidationResult[]} The validation results
  */
 export const validateDependenciesVersionsAreExact = async (cwd: string) => {
 	const pkgs = await findPackages(cwd, {
 		includeRoot: true,
-		ignore: ['node_modules'],
 	});
 
 	return pkgs.map((pkg) => validatePackage(pkg));
@@ -117,7 +117,7 @@ export const getExactDependencyVersionsChecker = async (): Promise<ILogMessage> 
 	if (validations.length === 0) {
 		return {
 			error: true,
-			text: logMessages.error.noPackagesFound(cwd),
+			text: logMessages.error.noPackagesFoundError(cwd),
 		};
 	}
 
