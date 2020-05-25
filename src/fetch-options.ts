@@ -10,7 +10,12 @@ export const splitVersions = (versions: string | string[] | undefined) => {
 	return typeof versions === 'string' ? versions.split(',') : versionsFallback;
 };
 
-async function transformAnswersToOptions({ versions, hooksInstalled, saveExact }: IProgram): Promise<IOptions> {
+async function transformAnswersToOptions({
+	versions,
+	hooksInstalled,
+	saveExact,
+	dependenciesExactVersion,
+}: IProgram): Promise<IOptions> {
 	try {
 		const cwd = await getCwd();
 		const versionsSplit = splitVersions(versions);
@@ -19,6 +24,7 @@ async function transformAnswersToOptions({ versions, hooksInstalled, saveExact }
 			versions: versionsSplit,
 			hooksInstalled,
 			saveExact,
+			dependenciesExactVersion,
 		};
 	} catch (err) {
 		console.error(err);
@@ -27,6 +33,7 @@ async function transformAnswersToOptions({ versions, hooksInstalled, saveExact }
 			versions: undefined,
 			hooksInstalled: false,
 			saveExact: false,
+			dependenciesExactVersion: false,
 		};
 	}
 }
