@@ -2,9 +2,9 @@
     <h1>env-linter</h1>
     <p>Ensures that all developers on your project use the same node version, install dependencies in an unambiguous manner and utilize githooks.</p>
 
-    [![npm](https://img.shields.io/npm/v/@namics/env-linter.svg)](https://www.npmjs.com/package/@namics/env-linter)
-    [![Travis](https://api.travis-ci.org/namics/env-linter.svg?branch=master)](https://travis-ci.org/namics/env-linter)
-    [![License](https://img.shields.io/badge/license-MIT-green.svg)](http://opensource.org/licenses/MIT)
+[![npm](https://img.shields.io/npm/v/@namics/env-linter.svg)](https://www.npmjs.com/package/@namics/env-linter)
+[![Travis](https://api.travis-ci.org/namics/env-linter.svg?branch=master)](https://travis-ci.org/namics/env-linter)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](http://opensource.org/licenses/MIT)
 
 </div>
 
