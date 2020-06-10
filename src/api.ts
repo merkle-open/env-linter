@@ -1,4 +1,5 @@
 import chalk from 'chalk';
+import { isCI } from 'ci-info';
 import { getCwd } from './get-cwd';
 import { getVersionCheckers } from './version-checker';
 import { getSaveExactChecker } from './save-exact';
@@ -17,7 +18,7 @@ export interface IApiOptions {
 
 export async function api(apiOptions: IApiOptions) {
 	const cwd = await getCwd();
-	const NOT_RUNNING_IN_CI = process.env.NODE_ENV?.toLowerCase() !== 'ci';
+	const NOT_RUNNING_IN_CI = !isCI;
 	const options: IOptions = {
 		cwd,
 		versions: splitVersions(apiOptions.versions),
