@@ -6,7 +6,8 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Bug Fixes
 
--   use more safe method to detect ci environments ([13ef8d6](https://github.com/namics/env-linter/commit/13ef8d6ebd9943392d4e6b428dd7bcd794c82c86))
+-   use safer method to detect ci environments ([13ef8d6](https://github.com/namics/env-linter/commit/13ef8d6ebd9943392d4e6b428dd7bcd794c82c86))
+-   update dependencies ([c4d3ef9](https://github.com/namics/env-linter/commit/9743b87f5a9d78385a34e3d26a6bb34173483d51))
 
 ## 0.2.0 (2020-05-31)
 
