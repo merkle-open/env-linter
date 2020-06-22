@@ -116,6 +116,7 @@
     "lint": "npm-run-all lint:*",
     "lint:license": "license-checker --production --summary --exclude \"Apache-2.0, BSD, ISC, LGPL, MIT, MPL\" --failOn \"AGPL; EPL; GPL\"",
     "lint:ts": "eslint . --ext .jsx,.js,.ts,.tsx",
+    "postinstall": "npm run build && ./bin/index.js --versions",
     "postbuild": "rimraf build/*.js build/*js.map",
     "prebuild": "rimraf build dist",
     "prepublishOnly": "npm-run-all prepublishOnly:*",
