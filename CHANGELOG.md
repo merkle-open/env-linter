@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/namics/env-linter/compare/v0.2.1...v0.3.0) (2020-06-22)
+
+### Features
+
+-   **env-var:** add environment variable ENV_LINTER_SKIP to skip all env-linter checks ([5eb4548](https://github.com/namics/env-linter/commit/5eb4548a26e4e705b7087c8141ea7acbe0ac399a))
+
+### Bug Fixes
+
+-   **ci:** prevent version checks on CI environments ([a54563f](https://github.com/namics/env-linter/commit/a54563f44cd5ad3f02d0b9d9fe3825fa423e32c9))
+
 ### [0.2.1](https://github.com/namics/env-linter/compare/v0.2.0...v0.2.1) (2020-06-10)
 
 ### Bug Fixes
