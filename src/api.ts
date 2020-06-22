@@ -18,7 +18,6 @@ export interface IApiOptions {
 
 export async function api(apiOptions: IApiOptions) {
 	const cwd = await getCwd();
-	const NOT_RUNNING_IN_CI = !isCI;
 	const options: IOptions = {
 		cwd,
 		versions: splitVersions(apiOptions.versions),
@@ -28,21 +27,25 @@ export async function api(apiOptions: IApiOptions) {
 	};
 
 	try {
+		if (isCI) {
+			return;
+		}
+
 		const checkers: Promise<ILogMessage>[] = [];
 
 		if (options.versions) {
 			checkers.push(...(await getVersionCheckers(options.versions)));
 		}
 
-		if (options.hooksInstalled && NOT_RUNNING_IN_CI) {
+		if (options.hooksInstalled) {
 			checkers.push(getHooksInstalledChecker());
 		}
 
-		if (options.saveExact && NOT_RUNNING_IN_CI) {
+		if (options.saveExact) {
 			checkers.push(getSaveExactChecker());
 		}
 
-		if (options.dependenciesExactVersion && NOT_RUNNING_IN_CI) {
+		if (options.dependenciesExactVersion) {
 			checkers.push(getExactDependencyVersionsChecker());
 		}
 
