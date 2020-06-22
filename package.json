@@ -17,11 +17,6 @@
       "path": "@namics/cz-conventional-changelog"
     }
   },
-  "contributors": [
-    "Simon Mollweide <simon.mollweide@namics.com>",
-    "Jörg Egli <joerg.egli@namics.com>",
-    "Jan Biasi <jan.biasi@namics.com>"
-  ],
   "devDependencies": {
     "@commitlint/cli": "8.3.5",
     "@dash4/plugin-actions": "0.8.5",
