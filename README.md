@@ -26,6 +26,8 @@ Feel free to use env-linter in a way that makes sense for your project. Here is 
 }
 ```
 
+You can skip all env-linter checks by using the environment variable `ENV_LINTER_SKIP=true`. This could be useful on certain CI environments which are not automatically detected by env-linter.
+
 ## API usage
 
 ```js

@@ -27,7 +27,8 @@ export async function api(apiOptions: IApiOptions) {
 	};
 
 	try {
-		if (isCI) {
+		const skipChecks = process.env.ENV_LINTER_SKIP === 'true';
+		if (skipChecks || isCI) {
 			return;
 		}
 
