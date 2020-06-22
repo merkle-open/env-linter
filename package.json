@@ -1,7 +1,7 @@
 {
   "name": "@namics/env-linter",
   "description": "Bunch of CLI helper for our projects. Check node version, hooks installed and more.",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "author": "Namics AG",
   "bin": {
     "env-linter": "./bin/index.js"
