@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.2](https://github.com/namics/env-linter/compare/v0.2.1...v0.3.2) (2020-07-09)
+
+### Bug Fixes
+
+-   **hooks-installed:** allow detection of hooks from anywhere in the repository ([ecc7805](https://github.com/namics/env-linter/commit/ecc780559ac462b499ad17146a9a50ed50f72f06))
+
 ### [0.3.1](https://github.com/namics/env-linter/compare/v0.2.1...v0.3.1) (2020-06-22)
 
 ### Bug Fixes
