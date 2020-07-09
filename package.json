@@ -1,6 +1,6 @@
 {
   "name": "@namics/env-linter",
-  "description": "Bunch of CLI helper for our projects. Check node version, hooks installed and more.",
+  "description": "Ensures that all developers on your project use the same node version, install dependencies in an unambiguous manner and utilize githooks.",
   "version": "0.3.1",
   "author": "Namics AG",
   "bin": {
