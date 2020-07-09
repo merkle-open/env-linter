@@ -1,5 +1,6 @@
 import { getFileData } from './get-file-data';
 import { logMessages } from './log-messages';
+import { getGitRoot } from './get-git-root';
 
 export const isHookInstalled = async (pathName: string) => {
 	try {
@@ -11,9 +12,13 @@ export const isHookInstalled = async (pathName: string) => {
 };
 
 export const getHooksInstalledChecker = async () => {
+	const gitRootDirectory = await getGitRoot();
+	if (gitRootDirectory.error) {
+		return gitRootDirectory;
+	}
 	const hooksInstalled = await Promise.all([
-		isHookInstalled('.git/hooks/commit-msg'),
-		isHookInstalled('.git/hooks/pre-commit'),
+		isHookInstalled(`${gitRootDirectory.text}/.git/hooks/commit-msg`),
+		isHookInstalled(`${gitRootDirectory.text}/.git/hooks/pre-commit`),
 	]);
 	const areAllHooksInstalled = hooksInstalled.every((hookInstalled) => hookInstalled);
 	return areAllHooksInstalled

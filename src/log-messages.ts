@@ -30,6 +30,10 @@ export const logMessages = {
 			),
 		readProgramVersionError: (program: string) =>
 			chalk.red(`${logSymbols.error} Error when executing '${program} --version'. Is ${program} installed?`),
+		readGitRootError: () =>
+			chalk.red(
+				`${logSymbols.error} Error when executing 'git rev-parse --show-toplevel'. Are you in a git repository?`
+			),
 		readNodeVersionFileError: (file: string) =>
 			chalk.red(`${logSymbols.error} Couldn't find ${file} file in your project root directory.`),
 		saveExactIsOffError: () =>
