@@ -21,7 +21,7 @@ import {
 } from '../src/version-checker';
 import { ILogMessage } from '../src/const';
 
-const exampleNodeList = [{ version: 'v12.14.0', date: '2019-12-16', npm: '6.13.4', security: true }];
+const exampleNodeList = [{ version: 'v12.14.0', date: '2019-12-16', npm: '6.13.4', security: true, lts: 'Erbium' }];
 const nodeVersionListURL = 'https://nodejs.org/dist/index.json';
 
 describe('isNPMandNodeMatching', () => {
@@ -51,11 +51,11 @@ describe('getNPMmatchesNodeLog', () => {
 			text: logMessages.error.wrongNPMVersionError('12.14.0'),
 		});
 	});
-	it('should return error-text if we can not receive node-list', async () => {
+	it('should return warning-text if we can not receive node-list', async () => {
 		(fetch as any).mockReturnValue(Promise.reject());
 		expect(await getNPMmatchesNodeLog('12.14.0', '6.0.0')).toMatchObject({
 			error: false,
-			text: logMessages.warning.fetchNodeListError(nodeVersionListURL),
+			text: logMessages.warning.fetchNodeListErrorMatchingNPM(nodeVersionListURL),
 		});
 	});
 });

@@ -8,6 +8,8 @@ export const logMessages = {
 			chalk.green(
 				`${logSymbols.success} Your node version ${usedNodeVersion} works with your npm version ${usedNPMVersion}.`
 			),
+		nodeVersionLTS: (usedNodeVersion: string) =>
+			chalk.green(`${logSymbols.success} Your node version ${usedNodeVersion} is a LTS version.`),
 		programVersionSatisfies: (program: string, usedVersion: string, expectedVersion: string) =>
 			chalk.green(
 				`${logSymbols.success} Your ${program} version ${usedVersion} works with the required version (${expectedVersion}) of your project.`
@@ -20,6 +22,10 @@ export const logMessages = {
 			),
 	},
 	error: {
+		nodeVersionNotLTSError: (usedNodeVersion: string) =>
+			chalk.red(
+				`${logSymbols.error} Change node-version! You are using node ${usedNodeVersion} which is not a LTS (long term support) version.`
+			),
 		wrongNPMVersionError: (usedNodeVersion: string) =>
 			chalk.red(
 				`${logSymbols.error} Change npm version! You are using node ${usedNodeVersion}, keep node and npm in sync! https://nodejs.org/dist/index.json`
@@ -55,9 +61,13 @@ export const logMessages = {
 			chalk.yellow(
 				`${logSymbols.warning} Specify ${program} version! You are using ${usedVersion} but you didn't specify a required version for ${program} in this project.`
 			),
-		fetchNodeListError: (nodeVersionListURL: string) =>
+		fetchNodeListErrorMatchingNPM: (nodeVersionListURL: string) =>
 			chalk.yellow(
 				`${logSymbols.warning} Could not fetch node-list from ${nodeVersionListURL}. Your NPM version might not match your node version.`
+			),
+		fetchNodeListErrorNodeLTS: (nodeVersionListURL: string) =>
+			chalk.yellow(
+				`${logSymbols.warning} Could not fetch node-list from ${nodeVersionListURL}. Your node version might not be a LTS version.`
 			),
 	},
 };

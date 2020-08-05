@@ -65,6 +65,10 @@ Checks if the npm option `save-exact` is enabled, either through a .npmrc file i
 
 Checks if the version definitions of the dependencies and devDependencies in the `package.json` (or in a monorepository all available packages) are fitting our standards, which means; no approximate versions eg. tilde `~` or caret `^`, no star `*` wildcard and no tarball embeds via `https://*`.
 
+### -l, --no-lts
+
+Checks if the used node version is a LTS version. Only if the option is set, the check is **not** being performed. By default env-linter assumes that you want to have an LTS version of node. Here is some more information [why it might be a good idea to use an LTS version](https://nodejs.org/en/about/releases/).
+
 ## License
 
 [MIT License](./LICENSE)

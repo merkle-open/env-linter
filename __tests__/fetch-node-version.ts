@@ -14,13 +14,13 @@ const nodeVersionListURL = 'https://nodejs.org/dist/index.json';
 describe('getNodeList', () => {
 	it('should return fetched data', async () => {
 		(fetch as any).mockReturnValue(Promise.resolve(new Response(JSON.stringify(exampleNodeList))));
-		expect(await getNodeList()).toMatchObject({ error: false, text: JSON.stringify(exampleNodeList) });
+		expect(await getNodeList('lts')).toMatchObject({ error: false, text: JSON.stringify(exampleNodeList) });
 	});
 	it('should return error-log if URL cannot be reached', async () => {
 		(fetch as any).mockReturnValue(Promise.reject());
-		expect(await getNodeList()).toMatchObject({
+		expect(await getNodeList('lts')).toMatchObject({
 			error: true,
-			text: logMessages.warning.fetchNodeListError(nodeVersionListURL),
+			text: logMessages.warning.fetchNodeListErrorNodeLTS(nodeVersionListURL),
 		});
 	});
 });

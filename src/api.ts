@@ -7,10 +7,12 @@ import { IOptions, ILogMessage } from './const';
 import { getHooksInstalledChecker } from './hooks-installed';
 import { splitVersions } from './fetch-options';
 import { getExactDependencyVersionsChecker } from './exact-dependency-versions';
+import { getNodeLTSChecker } from './lts';
 
 export interface IApiOptions {
 	cwd?: string;
 	versions?: string[];
+	lts?: boolean;
 	hooksInstalled?: boolean;
 	saveExact?: boolean;
 	dependenciesExactVersion?: boolean;
@@ -21,6 +23,7 @@ export async function api(apiOptions: IApiOptions) {
 	const options: IOptions = {
 		cwd,
 		versions: splitVersions(apiOptions.versions),
+		lts: apiOptions.lts,
 		hooksInstalled: apiOptions.hooksInstalled,
 		saveExact: apiOptions.saveExact,
 		dependenciesExactVersion: apiOptions.dependenciesExactVersion,
@@ -36,6 +39,10 @@ export async function api(apiOptions: IApiOptions) {
 
 		if (options.versions) {
 			checkers.push(...(await getVersionCheckers(options.versions)));
+		}
+
+		if (!options.lts) {
+			checkers.push(getNodeLTSChecker());
 		}
 
 		if (options.hooksInstalled) {
