@@ -41,7 +41,7 @@ export async function api(apiOptions: IApiOptions) {
 			checkers.push(...(await getVersionCheckers(options.versions)));
 		}
 
-		if (!options.lts) {
+		if (options.lts) {
 			checkers.push(getNodeLTSChecker());
 		}
 
@@ -64,7 +64,7 @@ export async function api(apiOptions: IApiOptions) {
 		}, false);
 
 		if (hasErrors) {
-			console.error(chalk.red('Stopping any further processes! process.exit(1)'));
+			console.error(chalk.red('Stopping any further processes!'));
 			process.exit(1);
 		}
 	} catch (err) {

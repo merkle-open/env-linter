@@ -16,6 +16,7 @@ export interface IProgram {
 	hooksInstalled?: boolean;
 	saveExact?: boolean;
 	dependenciesExactVersion?: boolean;
+	lts?: boolean;
 	// commander
 	rawArgs: string[];
 	args: string[];
