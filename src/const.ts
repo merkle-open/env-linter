@@ -2,7 +2,7 @@ import { ProjectManifest } from '@pnpm/types';
 
 // define cli api by using commander
 export interface IOptions {
-	cwd: string;
+	cwd?: string;
 	versions?: string[];
 	lts?: boolean;
 	hooksInstalled?: boolean;
