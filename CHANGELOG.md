@@ -6,14 +6,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Features
 
--   **env-var:** add environment variable ENV_LINTER_SKIP to skip all env-linter checks ([5eb4548](https://github.com/namics/env-linter/commit/5eb4548a26e4e705b7087c8141ea7acbe0ac399a))
--   **lts:** add node LTS version check ([5c12c84](https://github.com/namics/env-linter/commit/5c12c8401e6ad773fed95f6b5f472a4d7c07a36a))
--   **lts:** change no-LTS to LTS flag ([87a14cf](https://github.com/namics/env-linter/commit/87a14cf400772556b27d32c9f5b5b6706c371331))
-
-### Bug Fixes
-
--   **hooks-installed:** allow detection of hooks from anywhere in the repository ([ecc7805](https://github.com/namics/env-linter/commit/ecc780559ac462b499ad17146a9a50ed50f72f06))
--   **linter:** prevent version checks on CI environments ([a54563f](https://github.com/namics/env-linter/commit/a54563f44cd5ad3f02d0b9d9fe3825fa423e32c9))
+-   **lts:** add node LTS version check ([5c12c84](https://github.com/namics/env-linter/commit/5c12c8401e6ad773fed95f6b5f472a4d7c07a36a), [87a14cf](https://github.com/namics/env-linter/commit/87a14cf400772556b27d32c9f5b5b6706c371331))
 
 ### [0.3.2](https://github.com/namics/env-linter/compare/v0.2.1...v0.3.2) (2020-07-09)
 
