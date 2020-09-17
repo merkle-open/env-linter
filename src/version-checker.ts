@@ -12,7 +12,7 @@ export const isNPMandNodeMatching = (nodeList: INodeVersion[], usedNodeVersion: 
 };
 
 export const getNPMmatchesNodeLog = async (usedNodeVersion: string, usedNPMVersion: string) => {
-	const nodeList = await getNodeList();
+	const nodeList = await getNodeList('matchingNPM');
 	if (nodeList.error) {
 		return { error: false, text: nodeList.text };
 	}

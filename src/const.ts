@@ -4,6 +4,7 @@ import { ProjectManifest } from '@pnpm/types';
 export interface IOptions {
 	cwd: string;
 	versions?: string[];
+	lts?: boolean;
 	hooksInstalled?: boolean;
 	saveExact?: boolean;
 	dependenciesExactVersion?: boolean;
@@ -15,6 +16,7 @@ export interface IProgram {
 	hooksInstalled?: boolean;
 	saveExact?: boolean;
 	dependenciesExactVersion?: boolean;
+	lts?: boolean;
 	// commander
 	rawArgs: string[];
 	args: string[];
@@ -24,6 +26,7 @@ export interface INodeVersion {
 	version: string;
 	npm: string;
 	date: string;
+	lts: boolean | string;
 	security: boolean;
 }
 

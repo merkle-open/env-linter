@@ -12,6 +12,7 @@ describe('fetch-options', () => {
 			'--hooksInstalled',
 			'--saveExact',
 			'--dependenciesExactVersion',
+			'--lts',
 		];
 		const options = await fetchOptions();
 		delete options.cwd;
@@ -20,6 +21,7 @@ describe('fetch-options', () => {
 			hooksInstalled: true,
 			saveExact: true,
 			dependenciesExactVersion: true,
+			lts: true,
 		});
 	});
 	it('with empty versions', async () => {
@@ -30,10 +32,12 @@ describe('fetch-options', () => {
 			'--hooksInstalled',
 			'--saveExact',
 			'--dependenciesExactVersion',
+			'--lts',
 		];
 		const options = await fetchOptions();
 		delete options.cwd;
 		expect(options).toEqual({
+			lts: true,
 			dependenciesExactVersion: true,
 			hooksInstalled: true,
 			saveExact: true,
@@ -54,6 +58,7 @@ describe('fetch-options', () => {
 		(realpath as any).mockReturnValue(Promise.reject('example-error from fs.realpath'));
 		expect(await fetchOptions()).toEqual({
 			cwd: '',
+			lts: false,
 			dependenciesExactVersion: false,
 			hooksInstalled: false,
 			saveExact: false,

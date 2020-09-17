@@ -15,6 +15,7 @@ async function transformAnswersToOptions({
 	hooksInstalled,
 	saveExact,
 	dependenciesExactVersion,
+	lts,
 }: IProgram): Promise<IOptions> {
 	try {
 		const cwd = await getCwd();
@@ -25,6 +26,7 @@ async function transformAnswersToOptions({
 			hooksInstalled,
 			saveExact,
 			dependenciesExactVersion,
+			lts,
 		};
 	} catch (err) {
 		console.error(err);
@@ -34,6 +36,7 @@ async function transformAnswersToOptions({
 			hooksInstalled: false,
 			saveExact: false,
 			dependenciesExactVersion: false,
+			lts: false,
 		};
 	}
 }
@@ -46,8 +49,9 @@ export async function fetchOptions(): Promise<IOptions> {
 		.version(packageData.version)
 		.option('-vs, --versions [string]', 'check versions of global packages eg. node, npm, ...')
 		.option('-h, --hooksInstalled', 'check if hooks are installed, failes if not')
-		.option('-s, --saveExact', 'check if npm save-exact enabled, failes if not')
-		.option('-d, --dependenciesExactVersion', 'check if all dependencies are installed in an exact version')
+		.option('-s, --saveExact', 'check if npm save-exact is enabled, failes if not')
+		.option('-d, --dependenciesExactVersion', 'check if dependencies are installed as an exact version')
+		.option('-l, --lts', 'check if the used node version is LTS')
 		.parse(process.argv) as any) as IProgram;
 
 	return await transformAnswersToOptions(pg);
