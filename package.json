@@ -1,7 +1,7 @@
 {
   "name": "@namics/env-linter",
   "description": "Ensures that all developers on your project use the same node version, install dependencies in an unambiguous manner and utilize githooks.",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "author": "Namics AG",
   "bin": {
     "env-linter": "./bin/index.js"
