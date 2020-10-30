@@ -5,6 +5,7 @@ export interface IOptions {
 	cwd?: string;
 	versions?: string[];
 	lts?: boolean;
+	security?: boolean;
 	hooksInstalled?: boolean;
 	saveExact?: boolean;
 	dependenciesExactVersion?: boolean;

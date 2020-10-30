@@ -10,6 +10,8 @@ export const logMessages = {
 			),
 		nodeVersionLTS: (usedNodeVersion: string) =>
 			chalk.green(`${logSymbols.success} Your node version ${usedNodeVersion} is a LTS version.`),
+		nodeVersionSecurity: (usedNodeVersion: string) =>
+			chalk.green(`${logSymbols.success} Your node version ${usedNodeVersion} is a Security version.`),
 		programVersionSatisfies: (program: string, usedVersion: string, expectedVersion: string) =>
 			chalk.green(
 				`${logSymbols.success} Your ${program} version ${usedVersion} works with the required version (${expectedVersion}) of your project.`
@@ -25,6 +27,10 @@ export const logMessages = {
 		nodeVersionNotLTSError: (usedNodeVersion: string) =>
 			chalk.red(
 				`${logSymbols.error} Change node-version! You are using node ${usedNodeVersion} which is not a LTS (long term support) version.`
+			),
+		nodeVersionNotSecurityError: (usedNodeVersion: string) =>
+			chalk.red(
+				`${logSymbols.error} Change node-version! You are using node ${usedNodeVersion} which is not a Security version.`
 			),
 		wrongNPMVersionError: (usedNodeVersion: string) =>
 			chalk.red(
@@ -68,6 +74,10 @@ export const logMessages = {
 		fetchNodeListErrorNodeLTS: (nodeVersionListURL: string) =>
 			chalk.yellow(
 				`${logSymbols.warning} Could not fetch node-list from ${nodeVersionListURL}. Your node version might not be a LTS version.`
+			),
+		fetchNodeListErrorNodeSecurity: (nodeVersionListURL: string) =>
+			chalk.yellow(
+				`${logSymbols.warning} Could not fetch node-list from ${nodeVersionListURL}. Your node version might not be a Security version.`
 			),
 	},
 };
