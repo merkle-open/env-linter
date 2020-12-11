@@ -1,11 +1,18 @@
+import semver from 'semver';
 import { getInstalledVersion } from './get-version';
 import { getNodeList } from './fetch-node-versions';
 import { ILogMessage, INodeVersion } from './const';
 import { logMessages } from './log-messages';
 
-export const hasNodeVersionSecurity = (nodeList: INodeVersion[], usedNodeVersion: string) => {
+export const hasNodeVersionSecurityIssues = (nodeList: INodeVersion[], usedNodeVersion: string) => {
 	return nodeList.some((nodeVersion) => {
-		return nodeVersion.version.slice(1) === usedNodeVersion && nodeVersion.security !== false;
+		const nodeVersionText = nodeVersion.version.slice(1);
+		// return true, if any MINOR version above THIS version has a security flag
+		return (
+			semver.diff(nodeVersionText, usedNodeVersion) === 'minor' &&
+			semver.gt(nodeVersionText, usedNodeVersion) &&
+			nodeVersion.security === true
+		);
 	});
 };
 
@@ -15,9 +22,9 @@ export const getSecurityNodeLog = async (usedNodeVersion: string) => {
 		return { error: false, text: nodeList.text };
 	}
 
-	return hasNodeVersionSecurity(JSON.parse(nodeList.text), usedNodeVersion)
-		? { error: false, text: logMessages.success.nodeVersionSecurity(usedNodeVersion) }
-		: { error: true, text: logMessages.error.nodeVersionNotSecurityError(usedNodeVersion) };
+	return hasNodeVersionSecurityIssues(JSON.parse(nodeList.text), usedNodeVersion)
+		? { error: true, text: logMessages.error.nodeVersionNotSecurityError(usedNodeVersion) }
+		: { error: false, text: logMessages.success.nodeVersionSecurity(usedNodeVersion) };
 };
 
 export const getNodeSecurityChecker = async () => {

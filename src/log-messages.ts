@@ -11,7 +11,7 @@ export const logMessages = {
 		nodeVersionLTS: (usedNodeVersion: string) =>
 			chalk.green(`${logSymbols.success} Your node version ${usedNodeVersion} is a LTS version.`),
 		nodeVersionSecurity: (usedNodeVersion: string) =>
-			chalk.green(`${logSymbols.success} Your node version ${usedNodeVersion} is a Security version.`),
+			chalk.green(`${logSymbols.success} Your minor node version ${usedNodeVersion} is a secure version.`),
 		programVersionSatisfies: (program: string, usedVersion: string, expectedVersion: string) =>
 			chalk.green(
 				`${logSymbols.success} Your ${program} version ${usedVersion} works with the required version (${expectedVersion}) of your project.`
@@ -30,7 +30,7 @@ export const logMessages = {
 			),
 		nodeVersionNotSecurityError: (usedNodeVersion: string) =>
 			chalk.red(
-				`${logSymbols.error} Change node-version! You are using node ${usedNodeVersion} which is not a Security version.`
+				`${logSymbols.error} Change node-version! There is a security update for your used major version. You are using node ${usedNodeVersion} which is not considered secure.`
 			),
 		wrongNPMVersionError: (usedNodeVersion: string) =>
 			chalk.red(
