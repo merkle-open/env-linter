@@ -18,7 +18,7 @@ export const getNPMmatchesNodeLog = async (usedNodeVersion: string, usedNPMVersi
 	}
 	return isNPMandNodeMatching(JSON.parse(nodeList.text), usedNodeVersion, usedNPMVersion)
 		? { error: false, text: logMessages.success.nodeVersionWorksWithNPMVersion(usedNodeVersion, usedNPMVersion) }
-		: { error: true, text: logMessages.error.wrongNPMVersionError(usedNodeVersion) };
+		: { error: true, text: logMessages.error.wrongNPMVersionError(usedNodeVersion, usedNPMVersion) };
 };
 
 export const getValidVersionLog = async (program: string, usedVersion: string, expectedVersion: string) => {

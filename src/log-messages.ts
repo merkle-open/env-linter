@@ -26,9 +26,9 @@ export const logMessages = {
 			chalk.red(
 				`${logSymbols.error} Change node-version! You are using node ${usedNodeVersion} which is not a LTS (long term support) version.`
 			),
-		wrongNPMVersionError: (usedNodeVersion: string) =>
+		wrongNPMVersionError: (usedNodeVersion: string, usedNPMVersion: string) =>
 			chalk.red(
-				`${logSymbols.error} Change npm version! You are using node ${usedNodeVersion}, keep node and npm in sync! https://nodejs.org/dist/index.json`
+				`${logSymbols.error} Change npm version! You are using node ${usedNodeVersion} with npm ${usedNPMVersion}, keep node and npm in sync! https://nodejs.org/dist/index.json`
 			),
 		wrongProgramVersionError: (program: string, usedVersion: string, expectedVersion: string) =>
 			chalk.red(
