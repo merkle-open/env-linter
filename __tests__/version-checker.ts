@@ -21,39 +21,39 @@ import {
 } from '../src/version-checker';
 import { ILogMessage } from '../src/const';
 
-const exampleNodeList = [{ version: 'v12.14.0', date: '2019-12-16', npm: '6.13.4', security: true, lts: 'Erbium' }];
+const exampleNodeList = [{ version: 'v14.15.4', date: '2021-01-04', npm: '6.14.10', security: true, lts: 'Fermium' }];
 const nodeVersionListURL = 'https://nodejs.org/dist/index.json';
 
 describe('isNPMandNodeMatching', () => {
 	it('should return true because node and npm version match', async () => {
-		expect(isNPMandNodeMatching(exampleNodeList, '12.14.0', '6.13.4')).toBeTruthy();
+		expect(isNPMandNodeMatching(exampleNodeList, '14.15.4', '6.14.10')).toBeTruthy();
 	});
 	it('should return true because used npm-version is newer than the npm-version that node comes with)', async () => {
-		expect(isNPMandNodeMatching(exampleNodeList, '12.14.0', '6.13.5')).toBeTruthy();
+		expect(isNPMandNodeMatching(exampleNodeList, '14.15.4', '6.14.11')).toBeTruthy();
 	});
 	it('should return false because used npm-version is older than the npm-version that node comes with', async () => {
-		expect(isNPMandNodeMatching(exampleNodeList, '12.14.0', '6.12.1')).toBeFalsy();
+		expect(isNPMandNodeMatching(exampleNodeList, '14.15.4', '6.12.1')).toBeFalsy();
 	});
 });
 
 describe('getNPMmatchesNodeLog', () => {
 	it('should return the correct success-text', async () => {
 		(fetch as any).mockReturnValue(Promise.resolve(new Response(JSON.stringify(exampleNodeList))));
-		expect(await getNPMmatchesNodeLog('12.14.0', '6.13.4')).toMatchObject({
+		expect(await getNPMmatchesNodeLog('14.15.4', '6.14.10')).toMatchObject({
 			error: false,
-			text: logMessages.success.nodeVersionWorksWithNPMVersion('12.14.0', '6.13.4'),
+			text: logMessages.success.nodeVersionWorksWithNPMVersion('14.15.4', '6.14.10'),
 		});
 	});
 	it('should return error-text when node and npm versions do not match', async () => {
 		(fetch as any).mockReturnValue(Promise.resolve(new Response(JSON.stringify(exampleNodeList))));
-		expect(await getNPMmatchesNodeLog('12.14.0', '6.0.0')).toMatchObject({
+		expect(await getNPMmatchesNodeLog('14.15.4', '6.0.0')).toMatchObject({
 			error: true,
-			text: logMessages.error.wrongNPMVersionError('12.14.0'),
+			text: logMessages.error.wrongNPMVersionError('14.15.4', '6.0.0'),
 		});
 	});
 	it('should return warning-text if we can not receive node-list', async () => {
 		(fetch as any).mockReturnValue(Promise.reject());
-		expect(await getNPMmatchesNodeLog('12.14.0', '6.0.0')).toMatchObject({
+		expect(await getNPMmatchesNodeLog('14.15.4', '6.0.0')).toMatchObject({
 			error: false,
 			text: logMessages.warning.fetchNodeListErrorMatchingNPM(nodeVersionListURL),
 		});
@@ -62,15 +62,15 @@ describe('getNPMmatchesNodeLog', () => {
 
 describe('getValidVersionLog', () => {
 	it('should return the correct success-text', async () => {
-		expect(await getValidVersionLog('node', '12.14.0', '12.x.x')).toMatchObject({
+		expect(await getValidVersionLog('node', '14.15.4', '14.x.x')).toMatchObject({
 			error: false,
-			text: logMessages.success.programVersionSatisfies('node', '12.14.0', '12.x.x'),
+			text: logMessages.success.programVersionSatisfies('node', '14.15.4', '14.x.x'),
 		});
 	});
 	it('should return the correct error-text', async () => {
-		expect(await getValidVersionLog('node', '12.14.0', '10.x.x')).toMatchObject({
+		expect(await getValidVersionLog('node', '14.15.4', '10.x.x')).toMatchObject({
 			error: true,
-			text: logMessages.error.wrongProgramVersionError('node', '12.14.0', '10.x.x'),
+			text: logMessages.error.wrongProgramVersionError('node', '14.15.4', '10.x.x'),
 		});
 	});
 });
@@ -86,10 +86,10 @@ describe('getValidNodeVersionLog', () => {
 
 describe('processVersionArgument', () => {
 	it('should return the node version', async () => {
-		(execa as any).mockReturnValue(Promise.resolve({ stdout: '12.14.0' }));
-		expect(await processVersionArgument('node=12.14.0')).toMatchObject({
+		(execa as any).mockReturnValue(Promise.resolve({ stdout: '14.15.4' }));
+		expect(await processVersionArgument('node=14.15.4')).toMatchObject({
 			error: false,
-			text: logMessages.success.programVersionSatisfies('node', '12.14.0', '12.14.0'),
+			text: logMessages.success.programVersionSatisfies('node', '14.15.4', '14.15.4'),
 		});
 	});
 	it('should return the node version from .node-version file', async () => {
