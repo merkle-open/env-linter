@@ -44,15 +44,16 @@ async function transformAnswersToOptions({
 export async function fetchOptions(): Promise<IOptions> {
 	// eslint-disable-next-line
 	const packageData = require('../package.json');
-
-	const pg = (new Command()
+	const program = new Command();
+	program
 		.version(packageData.version)
 		.option('-vs, --versions [string]', 'check versions of global packages eg. node, npm, ...')
 		.option('-h, --hooksInstalled', 'check if hooks are installed, failes if not')
 		.option('-s, --saveExact', 'check if npm save-exact is enabled, failes if not')
 		.option('-d, --dependenciesExactVersion', 'check if dependencies are installed as an exact version')
-		.option('-l, --lts', 'check if the used node version is LTS')
-		.parse(process.argv) as any) as IProgram;
+		.option('-l, --lts', 'check if the used node version is LTS');
 
-	return await transformAnswersToOptions(pg);
+	program.parse();
+
+	return await transformAnswersToOptions(program.opts());
 }

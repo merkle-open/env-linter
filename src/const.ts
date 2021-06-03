@@ -17,9 +17,6 @@ export interface IProgram {
 	saveExact?: boolean;
 	dependenciesExactVersion?: boolean;
 	lts?: boolean;
-	// commander
-	rawArgs: string[];
-	args: string[];
 }
 
 export interface INodeVersion {
