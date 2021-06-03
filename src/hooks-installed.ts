@@ -16,11 +16,17 @@ export const getHooksInstalledChecker = async () => {
 	if (gitRootDirectory.error) {
 		return gitRootDirectory;
 	}
-	const hooksInstalled = await Promise.all([
+	const husky4HooksInstalled = await Promise.all([
 		isHookInstalled(`${gitRootDirectory.text}/.git/hooks/commit-msg`),
 		isHookInstalled(`${gitRootDirectory.text}/.git/hooks/pre-commit`),
 	]);
-	const areAllHooksInstalled = hooksInstalled.every((hookInstalled) => hookInstalled);
+	const husky6HooksInstalled = await Promise.all([
+		isHookInstalled(`${gitRootDirectory.text}/.husky/commit-msg`),
+		isHookInstalled(`${gitRootDirectory.text}/.husky/pre-commit`),
+	]);
+	const areAllHooksInstalled =
+		husky4HooksInstalled.every((hookInstalled) => hookInstalled) ||
+		husky6HooksInstalled.every((hookInstalled) => hookInstalled);
 	return areAllHooksInstalled
 		? { error: false, text: logMessages.success.gitHooksAreInstalled() }
 		: { error: true, text: logMessages.error.gitHooksNotInstalledError() };
