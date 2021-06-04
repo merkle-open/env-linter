@@ -19,6 +19,8 @@ export const logMessages = {
 			),
 		nodeVersionLTS: (usedNodeVersion: string) =>
 			chalk.green(`${logSymbols.success} Your node version ${usedNodeVersion} is a LTS version.`),
+		nodeVersionSecurity: (usedNodeVersion: string) =>
+			chalk.green(`${logSymbols.success} Your minor node version ${usedNodeVersion} is a secure version.`),
 		programVersionSatisfies: (program: string, usedVersion: string, expectedVersion: string) =>
 			chalk.green(
 				`${logSymbols.success} Your ${program} version ${usedVersion} works with the required version (${expectedVersion}) of your project.`
@@ -38,6 +40,10 @@ export const logMessages = {
 				} Change node-version! You are using node ${usedNodeVersion} which is not a LTS (long term support) version. ${createTerminalLink(
 					'lts'
 				)}`
+			),
+		nodeVersionNotSecureError: (usedNodeVersion: string) =>
+			chalk.red(
+				`${logSymbols.error} Change node-version! There is a security update for your used major version. You are using node ${usedNodeVersion} which is not considered secure. ${createTerminalLink('security')}`
 			),
 		wrongNPMVersionError: (usedNodeVersion: string, usedNPMVersion: string) =>
 			chalk.red(
@@ -85,7 +91,7 @@ export const logMessages = {
 			),
 		gitHooksNotInstalledError: () =>
 			chalk.red(
-				`${logSymbols.error} Git hooks are not installed. Install with "npm i -D husky". ${createTerminalLink(
+				`${logSymbols.error} Git hooks are not installed. ${createTerminalLink(
 					'hooksInstalled'
 				)}`
 			),
@@ -118,6 +124,10 @@ export const logMessages = {
 		fetchNodeListErrorNodeLTS: (nodeVersionListURL: string) =>
 			chalk.yellow(
 				`${logSymbols.warning} Could not fetch node-list from ${nodeVersionListURL}. Your node version might not be a LTS version.`
+			),
+		fetchNodeListErrorNodeSecurity: (nodeVersionListURL: string) =>
+			chalk.yellow(
+				`${logSymbols.warning} Could not fetch node-list from ${nodeVersionListURL}. Your node version might not be a secure node version.`
 			),
 	},
 };

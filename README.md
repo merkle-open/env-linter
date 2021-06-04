@@ -18,10 +18,10 @@ Feel free to use env-linter in a way that makes sense for your project. Here is 
 
 ```json
 {
-	"postinstall": "env-linter -h -s -d -vs 'node=12.x.x,npm=6.x.x'",
-	"prestart": "env-linter --versions 'node=12.x.x,npm=6.x.x'",
+	"postinstall": "env-linter -h -s -se -d -vs 'node=12.x.x,npm=6.x.x'",
+	"prestart": "env-linter -vs 'node=12.x.x,npm=6.x.x'",
 	"lint-staged": {
-		"**/package.json": ["env-linter --saveExact --dependenciesExactVersion"]
+		"**/package.json": ["env-linter -s -d"]
 	}
 }
 ```
@@ -56,6 +56,10 @@ In any case, the used node version is compared to the list of [official node-rel
 ### -h, --hooksInstalled
 
 Checks if git-hooks are installed (i.e. husky installed). env-linter will stop any further process-execution if git-hooks are not installed.
+
+### -se, --security
+
+Checks if the used node version is considered secure according to the current list of node releases. If a newer node-version is available which was released due to a security concern, env-linter will stop any further process-execution. Find out more about the security-flag in this [github issue](https://github.com/nodejs/Release/issues/437).
 
 ### -s, --saveExact
 

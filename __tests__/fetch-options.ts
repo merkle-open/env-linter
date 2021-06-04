@@ -11,6 +11,7 @@ describe('fetch-options', () => {
 			'--versions=node=12.14.0,npm=6.4.1',
 			'--hooksInstalled',
 			'--saveExact',
+			'--security',
 			'--dependenciesExactVersion',
 			'--lts',
 		];
@@ -20,6 +21,7 @@ describe('fetch-options', () => {
 			versions: ['node=12.14.0', 'npm=6.4.1'],
 			hooksInstalled: true,
 			saveExact: true,
+			security: true,
 			dependenciesExactVersion: true,
 			lts: true,
 		});
