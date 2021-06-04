@@ -63,6 +63,7 @@ describe('fetch-options', () => {
 			lts: false,
 			dependenciesExactVersion: false,
 			hooksInstalled: false,
+			security: false,
 			saveExact: false,
 			versions: undefined,
 		});
