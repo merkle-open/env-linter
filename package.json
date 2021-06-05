@@ -48,6 +48,7 @@
     "node-fetch": "2.6.1",
     "npm-check-updates": "11.6.0",
     "npm-run-all": "4.1.5",
+    "pinst": "2.1.6",
     "pkg-ok": "2.3.1",
     "prettier": "2.3.0",
     "rimraf": "3.0.2",
@@ -55,8 +56,8 @@
     "standard-version": "9.0.0",
     "terminal-link": "2.1.1",
     "ts-config-webpack-plugin": "2.0.0",
-    "tslib": "2.2.0",
     "ts-jest": "26.3.0",
+    "tslib": "2.2.0",
     "typescript": "4.0.2",
     "webpack": "4.44.1",
     "webpack-cli": "3.3.12",
@@ -73,12 +74,6 @@
     "dist"
   ],
   "homepage": "https://github.com/merkle-open/env-linter",
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
-  },
   "keywords": [
     "cli",
     "env",
@@ -109,12 +104,15 @@
     "lint:license": "license-checker --production --summary --exclude \"Apache-2.0, BSD, ISC, LGPL, MIT, MPL\" --failOn \"AGPL; EPL; GPL\"",
     "lint:ts": "eslint . --ext .jsx,.js,.ts,.tsx",
     "postbuild": "rimraf build/*.js build/*js.map",
+    "postinstall": "husky install",
+    "postpublish": "pinst --enable",
     "prebuild": "rimraf build dist",
     "prepublishOnly": "npm-run-all prepublishOnly:*",
     "prepublishOnly:lint": "npm run lint",
     "prepublishOnly:test": "npm test",
     "prepublishOnly:build": "npm run build",
     "prepublishOnly:pkg": "pkg-ok",
+    "prepublishOnly:pinst": "pinst --disable",
     "prerelease": "npm-run-all lint test build",
     "prettier": "prettier --write \"**/*.*(js|jsx|ts|tsx|json|md)\"",
     "release": "standard-version",
