@@ -1,3 +1,4 @@
+import { sync } from 'glob';
 import { getFileData } from './get-file-data';
 import { logMessages } from './log-messages';
 import { getGitRoot } from './get-git-root';
@@ -11,23 +12,23 @@ export const isHookInstalled = async (pathName: string) => {
 	}
 };
 
+export const areAllHooksInstalled = async (gitRootDirectory: string) => {
+	const husky4HooksInstalled = await Promise.all([
+		isHookInstalled(`${gitRootDirectory}/.git/hooks/commit-msg`),
+		isHookInstalled(`${gitRootDirectory}/.git/hooks/pre-commit`),
+	]);
+	const husky6gitignorePath = `${gitRootDirectory}/${sync('**/.husky/.gitignore')}`;
+	const husky6HooksInstalled = await isHookInstalled(husky6gitignorePath);
+	return husky6HooksInstalled ||
+		husky4HooksInstalled.every((hookInstalled) => hookInstalled);
+};
+
 export const getHooksInstalledChecker = async () => {
 	const gitRootDirectory = await getGitRoot();
 	if (gitRootDirectory.error) {
 		return gitRootDirectory;
 	}
-	const husky4HooksInstalled = await Promise.all([
-		isHookInstalled(`${gitRootDirectory.text}/.git/hooks/commit-msg`),
-		isHookInstalled(`${gitRootDirectory.text}/.git/hooks/pre-commit`),
-	]);
-	const husky6HooksInstalled = await Promise.all([
-		isHookInstalled(`${gitRootDirectory.text}/.husky/commit-msg`),
-		isHookInstalled(`${gitRootDirectory.text}/.husky/pre-commit`),
-	]);
-	const areAllHooksInstalled =
-		husky4HooksInstalled.every((hookInstalled) => hookInstalled) ||
-		husky6HooksInstalled.every((hookInstalled) => hookInstalled);
-	return areAllHooksInstalled
+	return await areAllHooksInstalled(gitRootDirectory.text)
 		? { error: false, text: logMessages.success.gitHooksAreInstalled() }
 		: { error: true, text: logMessages.error.gitHooksNotInstalledError() };
 };
