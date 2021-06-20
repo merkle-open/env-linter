@@ -8,4 +8,4 @@ Even-numbered Node releases (10, 12, etc.) become Active LTS versions after six 
 
 To find the newest, active LTS version, have a look at the following table: [https://nodejs.org/en/about/releases](https://nodejs.org/en/about/releases). The one with the status `Active LTS` is the one you are looking for.
 
-Note: EnvLinter does not check, if the version is as ACTIVE LTS version. It only checks, if the version is an LTS version.
+Note: env-linter does not check, if the version is an ACTIVE LTS version. It only checks, if the version is an LTS version.

@@ -20,7 +20,7 @@ export const logMessages = {
 		nodeVersionLTS: (usedNodeVersion: string) =>
 			chalk.green(`${logSymbols.success} Your node version ${usedNodeVersion} is a LTS version.`),
 		nodeVersionSecurity: (usedNodeVersion: string) =>
-			chalk.green(`${logSymbols.success} Your minor node version ${usedNodeVersion} is a secure version.`),
+			chalk.green(`${logSymbols.success} Your node version ${usedNodeVersion} is a secure version.`),
 		programVersionSatisfies: (program: string, usedVersion: string, expectedVersion: string) =>
 			chalk.green(
 				`${logSymbols.success} Your ${program} version ${usedVersion} works with the required version (${expectedVersion}) of your project.`
@@ -37,7 +37,7 @@ export const logMessages = {
 			chalk.red(
 				`${
 					logSymbols.error
-				} Change node-version! You are using node ${usedNodeVersion} which is not a LTS (long term support) version. ${createTerminalLink(
+				} Change node-version! You are using node ${usedNodeVersion} which is not an LTS version. ${createTerminalLink(
 					'lts'
 				)}`
 			),
@@ -85,7 +85,7 @@ export const logMessages = {
 			),
 		saveExactIsOffError: () =>
 			chalk.red(
-				`${logSymbols.error} Set save-exact to true with "npm config set save-exact true". ${createTerminalLink(
+				`${logSymbols.error} NPM save-exact is turned off. ${createTerminalLink(
 					'saveExact'
 				)}`
 			),
