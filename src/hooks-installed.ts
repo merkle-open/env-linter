@@ -1,4 +1,4 @@
-import { sync } from 'glob';
+import globby from 'globby';
 import { getFileData } from './get-file-data';
 import { logMessages } from './log-messages';
 import { getGitRoot } from './get-git-root';
@@ -17,7 +17,7 @@ export const areAllHooksInstalled = async (gitRootDirectory: string) => {
 		isHookInstalled(`${gitRootDirectory}/.git/hooks/commit-msg`),
 		isHookInstalled(`${gitRootDirectory}/.git/hooks/pre-commit`),
 	]);
-	const husky6gitignorePath = `${gitRootDirectory}/${sync('**/.husky/.gitignore')}`;
+	const husky6gitignorePath = `${gitRootDirectory}/${await globby('**/.husky/.gitignore')}`;
 	const husky6HooksInstalled = await isHookInstalled(husky6gitignorePath);
 	return husky6HooksInstalled ||
 		husky4HooksInstalled.every((hookInstalled) => hookInstalled);
