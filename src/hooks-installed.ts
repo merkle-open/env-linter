@@ -1,4 +1,5 @@
 import globby from 'globby';
+import fs from 'fs-extra';
 import { getFileData } from './get-file-data';
 import { logMessages } from './log-messages';
 import { getGitRoot } from './get-git-root';
@@ -13,14 +14,15 @@ export const isHookInstalled = async (pathName: string) => {
 };
 
 export const areAllHooksInstalled = async (gitRootDirectory: string) => {
-	const husky4HooksInstalled = await Promise.all([
+	const husky7directory = await globby(`${gitRootDirectory}/**/.husky/**/husky.sh`);
+	if (husky7directory.length > 0) {
+		return await fs.pathExists(husky7directory[0]);
+	}
+	const areHusky4HooksInstalled = await Promise.all([
 		isHookInstalled(`${gitRootDirectory}/.git/hooks/commit-msg`),
 		isHookInstalled(`${gitRootDirectory}/.git/hooks/pre-commit`),
 	]);
-	const husky6gitignorePath = `${gitRootDirectory}/${await globby('**/.husky/.gitignore')}`;
-	const husky6HooksInstalled = await isHookInstalled(husky6gitignorePath);
-	return husky6HooksInstalled ||
-		husky4HooksInstalled.every((hookInstalled) => hookInstalled);
+	return areHusky4HooksInstalled.every((hookInstalled) => hookInstalled);
 };
 
 export const getHooksInstalledChecker = async () => {
