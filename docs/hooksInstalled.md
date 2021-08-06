@@ -12,6 +12,6 @@ Make sure that the following two files are in there:
 - `pre-commit`
 
 ## Husky 7
-Hooks are stored in the `.husky` folder. Only the hooks that are installed will be added to this folder. env-linter will check if the `.husky` folder is present.
+Hooks are stored in the `.husky` folder. Only the hooks that are installed will be added to this folder. env-linter will check if the `**/.husky/_/husky.sh` file is present.
 
 Check this article on [how to install hooks in husky 7](https://typicode.github.io/husky/#/?id=usage).
