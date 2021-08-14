@@ -1,7 +1,7 @@
 {
   "name": "@namics/env-linter",
   "description": "Ensures that all developers on your project use the same node version, install dependencies in an unambiguous manner and utilize githooks.",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "author": "Merkle",
   "bin": {
     "env-linter": "./bin/index.js"
@@ -115,7 +115,7 @@
     "release": "standard-version",
     "sort-package": "npx fixpack",
     "test": "jest --coverage",
-    "update-dependencies": "npm-check-updates -u",
+    "update-dependencies": "npm-check-updates -i",
     "watch": "run-p watch:*",
     "watch-test": "jest --watchAll --coverage --notify --notifyMode=failure-change",
     "watch:bundle": "webpack --watch --mode=\"development\"",
