@@ -2,13 +2,6 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [0.5.0](https://github.com/merkle-open/env-linter/compare/v0.4.0...v0.5.0) (2021-08-14)
-
-### Features
-
--   make env-linter compatible with husky v5+  ([b6121c8](https://github.com/merkle-open/env-linter/commit/b6121c8771e89c032adae8d238f15f9a6c009b40)
--   update dependencies
-
 ## [0.4.0](https://github.com/namics/env-linter/compare/v0.2.1...v0.4.0) (2020-09-17)
 
 ### Features
