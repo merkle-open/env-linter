@@ -2,12 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [0.5.0](https://github.com/merkle-open/env-linter/compare/v0.4.0...v0.5.0) (2021-08-14)
+## [0.5.0](https://github.com/namics/env-linter/compare/v0.4.0...v0.5.0) (2021-08-14)
+
 
 ### Features
 
--   make env-linter compatible with husky v5+  ([b6121c8](https://github.com/merkle-open/env-linter/commit/b6121c8771e89c032adae8d238f15f9a6c009b40)
--   update dependencies
+* **hooks:** add support for husky v6 ([32d9ab5](https://github.com/namics/env-linter/commit/32d9ab541db7228b01f3477c2454a424c1bedcf1))
+* **hooks:** adjust detection of hooks for husky 7 ([e0570df](https://github.com/namics/env-linter/commit/e0570dfd44a4582f850b067847813f12984c4f4e))
+* **log-messages:** show npm version in wrong npm version log message ([a58df21](https://github.com/namics/env-linter/commit/a58df2176adc86d5d4cfcebb2146311d2fee42da))
+* **log-messages:** show why is this link next to the warnings ([f94fa41](https://github.com/namics/env-linter/commit/f94fa4194951f3a1ec004fbd69aad6b792ce32e1))
+* **security:** add option to check for secure node version ([902ba3b](https://github.com/namics/env-linter/commit/902ba3b31aa59eceedf755084ee598434a4d8106))
+* **security:** Check for higher minor security version inside used major version; adjust error and success messages; adjust security tests; ([9504086](https://github.com/namics/env-linter/commit/95040865f43a9eb71401efcd0099a23aac0d1af6))
+* **security:** Create security check based on lts; add test; ([86096b7](https://github.com/namics/env-linter/commit/86096b7d7150bd49fe1f2ce5e42bded58dde792a))
+
+
+### Bug Fixes
+
+* **hooks:** change detection of husky 6 hooks ([f57c732](https://github.com/namics/env-linter/commit/f57c732ebf978aa49e708d290286322a0f41251c))
 
 ## [0.4.0](https://github.com/namics/env-linter/compare/v0.2.1...v0.4.0) (2020-09-17)
 
