@@ -42,6 +42,6 @@ If you have an idea on how to automate this process, feel free to bring in your 
 
 We are using a couple of dependencies and it makes sense to keep those up to date.
 
-- Run `npm run update-dependencies` to update all of them in one go. Make sure to run the tests and a smoke-test afterwards.
-- Keep the node-version up to date as well (in `.node-version`, `.nvmrc` and in `.travis.yml` for the CI environment)
+- Run `npm run update-dependencies` to update all of them in one go. Then decide which ones you can keep as is and which ones you want to update later. Make sure to run the tests and a smoke-test afterwards.
+- Keep the node-version up to date as well (in `.node-version` and in `.github/workflows` for the CI environment)
 - Do not try to use env-linter within the env-linter, it does not work ❌😅. I once released a version of the env-linter trying that, it didn't end well. It is probably possible somehow but if you try it, do me favor and create a beta-release and test it first (not like I did it 🤦‍♂️).
