@@ -115,7 +115,7 @@
     "release": "standard-version",
     "sort-package": "npx fixpack",
     "test": "jest --coverage",
-    "update-dependencies": "npm-check-updates -i",
+    "update-dependencies": "npm-check-updates -u",
     "watch": "run-p watch:*",
     "watch-test": "jest --watchAll --coverage --notify --notifyMode=failure-change",
     "watch:bundle": "webpack --watch --mode=\"development\"",
