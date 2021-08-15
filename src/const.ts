@@ -39,7 +39,7 @@ export interface IProject {
 
 export type MarkdownDocsNames = keyof Pick<
 	IOptions,
-	'dependenciesExactVersion' | 'hooksInstalled' | 'lts' | 'saveExact' |'security' | 'versions'
+	'dependenciesExactVersion' | 'hooksInstalled' | 'lts' | 'saveExact' | 'security' | 'versions'
 >;
 
 export type PackageDependencyKeys = 'dependencies' | 'devDependencies';

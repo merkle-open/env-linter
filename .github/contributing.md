@@ -15,14 +15,14 @@ We are using [commitlint](https://github.com/conventional-changelog/commitlint) 
 
 ## Release
 
--   Before you start, make sure you are on the develop branch and you have the latest changes.
--   Run `npm run lint` to make sure there are no linting issues.
--   Run `npm run test` to make sure all tests pass and the coverage is fine. ✅
--   Run `npm run build` to create a build for a smoke-test 💨 (check out the next section for more detail)
--   Run `npm run release` and wait ⏰ for the magic 🎩 to happen.
-    -   The version will automatically be bumped and the CHANGELOG.md should automatically be generated.
-    -   I believe to remember that it automatically creates a release commit but without the updates in the CHANGELOG.md. I think I usually added that with an additional commit or you can git reset the local commit and add the changelog to the release commit. Feel free to check if this process can be optimized and then go ahead and delete this section.
-    -   Maybe quickly read through the CHANGELOG.md to make sure it is somewhat understandable.
+- Before you start, make sure you are on the develop branch and you have the latest changes.
+- Run `npm run lint` to make sure there are no linting issues.
+- Run `npm run test` to make sure all tests pass and the coverage is fine. ✅
+- Run `npm run build` to create a build for a smoke-test 💨 (check out the next section for more detail)
+- Run `npm run release` and wait ⏰ for the magic 🎩 to happen.
+  - The version will automatically be bumped and the CHANGELOG.md should automatically be generated.
+  - I believe to remember that it automatically creates a release commit but without the updates in the CHANGELOG.md. I think I usually added that with an additional commit or you can git reset the local commit and add the changelog to the release commit. Feel free to check if this process can be optimized and then go ahead and delete this section.
+  - Maybe quickly read through the CHANGELOG.md to make sure it is somewhat understandable.
 
 **NOTE**: I have a hunch that as long as env-linter is not on a stable version (aka 1.0.0), we need to manually decide on the version bump. You can do this by running `npm run release -- --release-as patch` or `npm run release -- --release-as minor`. For me, it sometimes picked the wrong version otherwise.
 
@@ -42,6 +42,6 @@ If you have an idea on how to automate this process, feel free to bring in your 
 
 We are using a couple of dependencies and it makes sense to keep those up to date.
 
--   Run `npm run update-dependencies` to update all of them in one go. Make sure to run the tests and a smoke-test afterwards.
--   Keep the node-version up to date as well (in `.node-version`, `.nvmrc` and in `.travis.yml` for the CI environment)
--   Do not try to use env-linter within the env-linter, it does not work ❌😅. I once released a version of the env-linter trying that, it didn't end well. It is probably possible somehow but if you try it, do me favor and create a beta-release and test it first (not like I did it 🤦‍♂️).
+- Run `npm run update-dependencies` to update all of them in one go. Make sure to run the tests and a smoke-test afterwards.
+- Keep the node-version up to date as well (in `.node-version`, `.nvmrc` and in `.travis.yml` for the CI environment)
+- Do not try to use env-linter within the env-linter, it does not work ❌😅. I once released a version of the env-linter trying that, it didn't end well. It is probably possible somehow but if you try it, do me favor and create a beta-release and test it first (not like I did it 🤦‍♂️).

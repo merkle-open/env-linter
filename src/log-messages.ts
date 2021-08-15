@@ -43,7 +43,11 @@ export const logMessages = {
 			),
 		nodeVersionNotSecureError: (usedNodeVersion: string) =>
 			chalk.red(
-				`${logSymbols.error} Change node-version! There is a security update for your used major version. You are using node ${usedNodeVersion} which is not considered secure. ${createTerminalLink('security')}`
+				`${
+					logSymbols.error
+				} Change node-version! There is a security update for your used major version. You are using node ${usedNodeVersion} which is not considered secure. ${createTerminalLink(
+					'security'
+				)}`
 			),
 		wrongNPMVersionError: (usedNodeVersion: string, usedNPMVersion: string) =>
 			chalk.red(
@@ -84,17 +88,9 @@ export const logMessages = {
 				)}`
 			),
 		saveExactIsOffError: () =>
-			chalk.red(
-				`${logSymbols.error} NPM save-exact is turned off. ${createTerminalLink(
-					'saveExact'
-				)}`
-			),
+			chalk.red(`${logSymbols.error} NPM save-exact is turned off. ${createTerminalLink('saveExact')}`),
 		gitHooksNotInstalledError: () =>
-			chalk.red(
-				`${logSymbols.error} Git hooks are not installed. ${createTerminalLink(
-					'hooksInstalled'
-				)}`
-			),
+			chalk.red(`${logSymbols.error} Git hooks are not installed. ${createTerminalLink('hooksInstalled')}`),
 		noPackagesFoundError: (cwd: string) =>
 			chalk.red(
 				`${logSymbols.error} No packages in "${cwd}" found. ${createTerminalLink('dependenciesExactVersion')}`

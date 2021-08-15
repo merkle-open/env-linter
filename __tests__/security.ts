@@ -8,9 +8,7 @@ jest.mock('execa');
 jest.mock('node-fetch');
 jest.mock('fs-extra');
 
-
 const { Response } = jest.requireActual('node-fetch');
-
 
 const exampleNodeList = [
 	{ version: 'v13.0.0', date: '2020-07-29', npm: '6.14.7', security: true, lts: false },

@@ -30,7 +30,7 @@ export const getHooksInstalledChecker = async () => {
 	if (gitRootDirectory.error) {
 		return gitRootDirectory;
 	}
-	return await areAllHooksInstalled(gitRootDirectory.text)
+	return (await areAllHooksInstalled(gitRootDirectory.text))
 		? { error: false, text: logMessages.success.gitHooksAreInstalled() }
 		: { error: true, text: logMessages.error.gitHooksNotInstalledError() };
 };

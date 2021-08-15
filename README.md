@@ -18,11 +18,11 @@ Feel free to use env-linter in any way that makes sense for your project. Here i
 
 ```json
 {
-	"postinstall": "env-linter -s -se -d -vs 'node=14.x.x,npm=7.x.x'",
-	"prestart": "env-linter -h -vs 'node=14.x.x,npm=7.x.x'",
-	"lint-staged": {
-		"**/package.json": ["env-linter -s -d"]
-	}
+  "postinstall": "env-linter -s -se -d -vs 'node=14.x.x,npm=7.x.x'",
+  "prestart": "env-linter -h -vs 'node=14.x.x,npm=7.x.x'",
+  "lint-staged": {
+    "**/package.json": ["env-linter -s -d"]
+  }
 }
 ```
 
@@ -34,12 +34,12 @@ You can skip all env-linter checks by using the environment variable `ENV_LINTER
 const { api } = require('@namics/env-linter');
 
 await api({
-	versions: 'node=14.x.x,npm=7.x.x',
-	hooksInstalled: true,
-	saveExact: true,
-	dependenciesExactVersion: true,
-	lts: true,
-	security: true,
+  versions: 'node=14.x.x,npm=7.x.x',
+  hooksInstalled: true,
+  saveExact: true,
+  dependenciesExactVersion: true,
+  lts: true,
+  security: true,
 });
 ```
 

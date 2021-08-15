@@ -1,6 +1,6 @@
 # Versions
 
-This warning can occure for a few different reasons. 
+This warning can occure for a few different reasons.
 
 First, it may indicate, that the used npm version is older than the npm version that node comes with. Have a look at [https://nodejs.org/en/download/releases](https://nodejs.org/en/download/releases) to see, which npm version comes with which Node version.
 

@@ -17,11 +17,11 @@ import { IPackage } from '../src/const';
 const TEST_CWD_VALUE = '/test-cwd/';
 (getCwd as any).mockReturnValue(Promise.resolve(TEST_CWD_VALUE));
 
-const fakePackageWithoutAnyDeps = ({
+const fakePackageWithoutAnyDeps = {
 	name: 'fakeValidPackage',
-} as any) as IPackage;
+} as any as IPackage;
 
-const fakeValidPackage = ({
+const fakeValidPackage = {
 	name: 'fakeValidPackage',
 	dependencies: {
 		react: '1.16.0',
@@ -29,18 +29,18 @@ const fakeValidPackage = ({
 	devDependencies: {
 		typescript: '3.7.0',
 	},
-} as any) as IPackage;
+} as any as IPackage;
 
-const fakeInvalidPackageWithoutName = ({
+const fakeInvalidPackageWithoutName = {
 	dependencies: {
 		react: '^1.16.0',
 	},
 	devDependencies: {
 		typescript: '3.7.0',
 	},
-} as any) as IPackage;
+} as any as IPackage;
 
-const fakeInvalidPackage = ({
+const fakeInvalidPackage = {
 	name: 'fakeInvalidPackage',
 	dependencies: {
 		react: '^1.16.0',
@@ -50,9 +50,9 @@ const fakeInvalidPackage = ({
 		typescript: '~3.7.0',
 		eslint: '^3.7.0',
 	},
-} as any) as IPackage;
+} as any as IPackage;
 
-const fakeMixedPackage = ({
+const fakeMixedPackage = {
 	name: 'fakeMixedPackage',
 	dependencies: {
 		'core-js': '*',
@@ -64,7 +64,7 @@ const fakeMixedPackage = ({
 		webpack: '~4',
 		forever: 'https://github.com/indexzero/forever/tarball/v0.5.6',
 	},
-} as any) as IPackage;
+} as any as IPackage;
 
 describe('exactDependencyVersions', () => {
 	it('should return true if all (dev-)deps are installed by exact version', async () => {
