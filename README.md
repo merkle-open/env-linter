@@ -75,6 +75,10 @@ Checks if the version definitions of the dependencies and devDependencies in the
 
 Checks if the used node version is a LTS version. Here is some more information [why it might be a good idea to use an LTS version](https://nodejs.org/en/about/releases/).
 
+## Contributing
+
+You want to [contribute to the env-linter](./.github/contributing.md)? That's awesome!
+
 ## License
 
 [MIT License](./LICENSE)

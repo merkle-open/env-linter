@@ -3,11 +3,11 @@
 You want to contribute something to the env-linter? That's awesome! 😍
 
 There are just a few things you should know before you get cracking. 🤓
-First of all, try to keep the documentary (README.md, CONTRIBUTE.md) up to date and use emojis extensively. 🤘 BTW: We should consider switching to [emoji-log](https://github.com/ahmadawais/Emoji-Log). 😜
+First of all, try to keep the documentary (README.md, contributing.md) up to date and use emojis extensively. 🤘 BTW: We should consider switching to [emoji-log](https://github.com/ahmadawais/Emoji-Log). 😜
 
 ## Commits
 
-TLDR: use `npm run cz` to commit and you should be fine.
+TLDR: use `npm run commit` to commit and you should be fine.
 
 If you are working on a new feature or a bugfix use a branch `feat/new-feature` / `fix/broken-stuff` to develop.
 

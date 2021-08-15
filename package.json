@@ -98,7 +98,7 @@
     "build:bundle": "webpack --mode=\"production\"",
     "build:definitions": "tsc",
     "clean": "npx --ignore-existing rimraf lerna-debug.log npm-debug.log package-lock.json node_modules",
-    "cz": "git-cz",
+    "commit": "git-cz",
     "lint": "npm-run-all lint:*",
     "lint:license": "license-checker --production --summary --exclude \"Apache-2.0, BSD, ISC, LGPL, MIT, MPL\" --failOn \"AGPL; EPL; GPL\"",
     "lint:ts": "eslint . --ext .jsx,.js,.ts,.tsx",
