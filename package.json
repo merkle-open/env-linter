@@ -92,7 +92,7 @@
   },
   "main": "./dist/index.js",
   "private": false,
-  "repository": "https://github.com/namics/env-linter",
+  "repository": "https://github.com/merkle-open/env-linter",
   "scripts": {
     "build": "npm-run-all build:*",
     "build:bundle": "webpack --mode=\"production\"",
