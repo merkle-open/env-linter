@@ -3,7 +3,7 @@
     <p>Ensures that all developers on your project use the same, secure LTS version of node, install dependencies in an unambiguous manner and utilize githooks.</p>
 
 [![npm](https://img.shields.io/npm/v/@namics/env-linter.svg)](https://www.npmjs.com/package/@namics/env-linter)
-[![Travis](https://api.travis-ci.org/namics/env-linter.svg?branch=master)](https://travis-ci.org/namics/env-linter)
+[![Build Status](https://github.com/merkle-open/env-linter/workflows/ci/badge.svg?branch=master)](https://github.com/merkle-open/env-linter/actions)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](http://opensource.org/licenses/MIT)
 
 </div>
