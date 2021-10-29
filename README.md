@@ -18,8 +18,8 @@ Feel free to use env-linter in any way that makes sense for your project. Here i
 
 ```json
 {
-  "postinstall": "env-linter -s -se -d -vs 'node=14.x.x,npm=7.x.x'",
-  "prestart": "env-linter -h -vs 'node=14.x.x,npm=7.x.x'",
+  "postinstall": "env-linter -s -se -d -vs 'node=16.x.x,npm=8.x.x'",
+  "prestart": "env-linter -h -vs 'node=16.x.x,npm=8.x.x'",
   "lint-staged": {
     "**/package.json": ["env-linter -s -d"]
   }
@@ -34,7 +34,7 @@ You can skip all env-linter checks by using the environment variable `ENV_LINTER
 const { api } = require('env-linter');
 
 await api({
-  versions: 'node=14.x.x,npm=7.x.x',
+  versions: 'node=16.x.x,npm=8.x.x',
   hooksInstalled: true,
   saveExact: true,
   dependenciesExactVersion: true,
@@ -48,7 +48,7 @@ await api({
 ### -vs, --versions [string]
 
 Checks the installed versions of global packages or programs like node, npm, yo, etc. against a required version.
-For example calling `env-linter --versions 'node=14.x.x'` will ensure that version 14 of node is being used. Multiple versions can be checked by separating them with a comma (eg. `--versions 'node=14.x.x,npm=7.x.x,yo=4.x.x'`).
+For example calling `env-linter --versions 'node=16.x.x'` will ensure that version 16 of node is being used. Multiple versions can be checked by separating them with a comma (eg. `--versions 'node=16.x.x,npm=8.x.x,yo=4.x.x'`).
 env-linter will stop any further process-execution if a package or program does not satisfy the required version.
 
 Calling env-linter with `--versions` but without any arguments will compare the installed node-version with the node-version from the `.node-version` file.
