@@ -63,7 +63,7 @@
     "zen-observable": "0.8.15"
   },
   "engines": {
-    "node": ">=v14.15.0"
+    "node": ">=14.15.0"
   },
   "files": [
     "README.md",
