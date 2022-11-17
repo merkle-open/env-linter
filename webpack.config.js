@@ -17,6 +17,7 @@ module.exports = {
 		},
 	},
 	output: {
+		filename: 'index.js',
 		library: 'env-linter',
 		libraryTarget: 'umd',
 		umdNamedDefine: true,
