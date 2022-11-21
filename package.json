@@ -1,7 +1,7 @@
 {
   "name": "env-linter",
   "description": "Ensures that all developers on your project use the same node version, install dependencies in an unambiguous manner and utilize githooks.",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "author": "Merkle",
   "bin": {
     "env-linter": "./bin/index.js"
@@ -112,7 +112,7 @@
     "prepublishOnly:pkg": "npx -y pkg-ok@2.3.1",
     "prerelease": "npm-run-all lint test build",
     "prettier": "prettier --write \"**/*.*(js|jsx|ts|tsx|json|md)\"",
-    "release": "standard-version",
+    "release": "standard-version --skip.commit",
     "test": "jest --coverage",
     "update-dependencies": "npm-check-updates -u",
     "watch": "run-p watch:*",
