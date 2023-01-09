@@ -2,7 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [1.0.0](https://github.com/merkle-open/env-linter/compare/v0.5.1...v1.0.0) (2022-05-19)
+## [1.1.0](https://github.com/merkle-open/env-linter/compare/v1.0.0...v1.1.0) (2022-05-19)
+
+### chore
+
+- **chore**: update project dependencies ([b67d616](https://github.com/merkle-open/env-linter/commit/b67d616deadc14e3167e5cf9d794d671d4da541a))
+- **chore**: ensure node 18 support ([b947602](https://github.com/merkle-open/env-linter/commit/b947602dcbeee2eaf0ed641bd2ea1d94174e953f))
+- **chore**: update webpack configuration for new webpack version ([f0a23f5](https://github.com/merkle-open/env-linter/commit/f0a23f5212bbd2b649939dc958cb2aa887e9f022))
+
+## [1.0.0](https://github.com/merkle-open/env-linter/compare/v0.5.1...v1.0.0) (2023-01-09)
 
 ### ⚠ BREAKING CHANGES
 
