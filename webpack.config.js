@@ -4,7 +4,6 @@ const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 module.exports = (env) => {
 	return {
-		mode: 'production',
 		target: 'node',
 		node: {
 			__dirname: false,
