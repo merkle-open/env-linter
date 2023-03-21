@@ -1,5 +1,5 @@
 {
-	"extends": "@namics/ts-config",
+	"extends": "@merkle-open/ts-config",
 	"compilerOptions": {
 		"outDir": "build",
 		"module": "commonjs",

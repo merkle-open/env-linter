@@ -14,9 +14,9 @@ export const isHookInstalled = async (pathName: string) => {
 };
 
 export const areAllHooksInstalled = async (gitRootDirectory: string) => {
-	const husky7directory = await globby(`${gitRootDirectory}/**/.husky/_/husky.sh`);
-	if (husky7directory.length > 0) {
-		return await fs.pathExists(husky7directory[0]);
+	const husky8directory = await globby(`${gitRootDirectory}/**/.husky/_/husky.sh`);
+	if (husky8directory.length > 0) {
+		return await fs.pathExists(husky8directory[0]);
 	}
 	const areHusky4HooksInstalled = await Promise.all([
 		isHookInstalled(`${gitRootDirectory}/.git/hooks/commit-msg`),
