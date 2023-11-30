@@ -1,7 +1,7 @@
 module.exports = {
 	extends: [
-		'@namics/eslint-config/configurations/typescript-node.js',
-		'@namics/eslint-config/configurations/typescript-node-disable-styles.js',
+		'@merkle-open/eslint-config/configurations/typescript-node.js',
+		'@merkle-open/eslint-config/configurations/typescript-node-disable-styles.js',
 	].map(require.resolve),
 	rules: {
 		'no-console': 0,
