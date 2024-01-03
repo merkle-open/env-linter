@@ -2,9 +2,9 @@ const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin').CleanWebpackPlugin;
 const TsConfigWebpackPlugin = require('ts-config-webpack-plugin');
 
-const crypto = require("crypto");
+const crypto = require('crypto');
 const crypto_orig_createHash = crypto.createHash;
-crypto.createHash = algorithm => crypto_orig_createHash(algorithm == 'md4' ? 'sha256' : algorithm);
+crypto.createHash = (algorithm) => crypto_orig_createHash(algorithm == 'md4' ? 'sha256' : algorithm);
 
 module.exports = {
 	target: 'node',
@@ -22,13 +22,13 @@ module.exports = {
 		filename: `index.js`,
 		library: 'env-linter',
 		libraryTarget: 'umd',
-		umdNamedDefine: true
+		umdNamedDefine: true,
 	},
 	plugins: [
 		// Cleans the dist folder before the build starts
 		new CleanWebpackPlugin(),
 		// Multi threading typescript loader configuration with caching for .ts and .tsx files
 		// see https://github.com/merkle-open/webpack-config-plugins/tree/master/packages/ts-config-webpack-plugin/config
-		new TsConfigWebpackPlugin()
+		new TsConfigWebpackPlugin(),
 	],
 };
