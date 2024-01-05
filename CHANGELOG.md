@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/merkle-open/env-linter/compare/v0.5.1...v2.0.0) (2024-01-05)
+
+
+### ⚠ BREAKING CHANGES
+
+* **chore:** removes node 14 and 16 support and adds node 18 and 20 support
+* **chore:** bump dependencies and update node engine ([3ca2b5c](https://github.com/merkle-open/env-linter/commit/3ca2b5c547515fc1a366c8f4a1fe64a844533ecf))
+
 ## [1.0.0](https://github.com/merkle-open/env-linter/compare/v0.5.1...v1.0.0) (2022-05-19)
 
 ### ⚠ BREAKING CHANGES

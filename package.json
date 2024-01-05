@@ -1,7 +1,7 @@
 {
   "name": "env-linter",
   "description": "Ensures that all developers on your project use the same node version, install dependencies in an unambiguous manner and utilize githooks.",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "author": "Merkle",
   "bin": {
     "env-linter": "./bin/index.js"
