@@ -62,7 +62,7 @@ const validateVersion = (version: string): IVersionValidationResult => {
 const validateDependenciesRecord = (
 	pkgName = 'package',
 	type: PackageDependencyKeys,
-	deps: Record<string, string> = {}
+	deps: Record<string, string> = {},
 ): IDetailedVersionValidationResult => {
 	const validationResults = Object.keys(deps).map((dep) => {
 		const validationResult = validateVersion(deps[dep]);
@@ -83,7 +83,7 @@ const validateDependenciesRecord = (
 				error: true,
 				text: logMessages.error.notAllDependenciesExactError(type, pkgName, errorStack),
 				invalidDefinitions,
-		  };
+			};
 };
 
 /**

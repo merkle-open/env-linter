@@ -72,11 +72,11 @@ describe('exactDependencyVersions', () => {
 
 		expect(dependencies.error).toEqual(false);
 		expect(dependencies.text).toEqual(
-			logMessages.success.allDependenciesExact('dependencies', fakeValidPackage.name)
+			logMessages.success.allDependenciesExact('dependencies', fakeValidPackage.name),
 		);
 		expect(devDependencies.error).toEqual(false);
 		expect(devDependencies.text).toEqual(
-			logMessages.success.allDependenciesExact('devDependencies', fakeValidPackage.name)
+			logMessages.success.allDependenciesExact('devDependencies', fakeValidPackage.name),
 		);
 	});
 
@@ -91,19 +91,19 @@ describe('exactDependencyVersions', () => {
 
 		expect(dependencies.text).toContain('Not all dependencies in fakeInvalidPackage have been declared by exact');
 		expect(dependencies.invalidDefinitions[0].text).toEqual(
-			'[react] Approximate version identifier "^" is not allowed.'
+			'[react] Approximate version identifier "^" is not allowed.',
 		);
 		expect(dependencies.invalidDefinitions[1].text).toEqual(
-			'[react-dom] Approximate version identifier "~" is not allowed.'
+			'[react-dom] Approximate version identifier "~" is not allowed.',
 		);
 		expect(devDependencies.text).toContain(
-			'Not all devDependencies in fakeInvalidPackage have been declared by exact'
+			'Not all devDependencies in fakeInvalidPackage have been declared by exact',
 		);
 		expect(devDependencies.invalidDefinitions[0].text).toEqual(
-			'[typescript] Approximate version identifier "~" is not allowed.'
+			'[typescript] Approximate version identifier "~" is not allowed.',
 		);
 		expect(devDependencies.invalidDefinitions[1].text).toEqual(
-			'[eslint] Approximate version identifier "^" is not allowed.'
+			'[eslint] Approximate version identifier "^" is not allowed.',
 		);
 	});
 
@@ -117,16 +117,16 @@ describe('exactDependencyVersions', () => {
 		expect(devDependencies.invalidDefinitions).toHaveLength(2);
 
 		expect(dependencies.invalidDefinitions[0].text).toEqual(
-			'[core-js] Wildcard "*" is not allowed as version declaration.'
+			'[core-js] Wildcard "*" is not allowed as version declaration.',
 		);
 		expect(dependencies.invalidDefinitions[1].text).toEqual(
-			'[react-dom] Approximate version identifier "~" is not allowed.'
+			'[react-dom] Approximate version identifier "~" is not allowed.',
 		);
 		expect(devDependencies.invalidDefinitions[0].text).toEqual(
-			'[webpack] Approximate version identifier "~" is not allowed.'
+			'[webpack] Approximate version identifier "~" is not allowed.',
 		);
 		expect(devDependencies.invalidDefinitions[1].text).toEqual(
-			'[forever] Tarball dependencies are not allowed (https://github.com/indexzero/forever/tarball/v0.5.6).'
+			'[forever] Tarball dependencies are not allowed (https://github.com/indexzero/forever/tarball/v0.5.6).',
 		);
 	});
 
@@ -155,7 +155,7 @@ describe('exactDependencyVersions', () => {
 		});
 		it('should work for mixed multi packages (monorepo)', async () => {
 			(findPackages as any).mockReturnValue(
-				Promise.resolve([{ manifest: fakeValidPackage }, { manifest: fakeMixedPackage }])
+				Promise.resolve([{ manifest: fakeValidPackage }, { manifest: fakeMixedPackage }]),
 			);
 			const res = await validateDependenciesVersionsAreExact('./');
 			expect(res.length).toEqual(2);
@@ -182,7 +182,7 @@ describe('exactDependencyVersions', () => {
 				[
 					logMessages.success.allDependenciesExact('dependencies', fakeValidPackage.name),
 					logMessages.success.allDependenciesExact('devDependencies', fakeValidPackage.name),
-				].join('\n')
+				].join('\n'),
 			);
 		});
 

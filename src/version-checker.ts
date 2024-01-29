@@ -51,7 +51,7 @@ export const processVersionArgument = async (versionArgument: string) => {
 
 export const getVersionCheckers = async (versionArguments: string[]) => {
 	const versionChecks: Promise<ILogMessage>[] = versionArguments.map(async (versionArgument) =>
-		processVersionArgument(versionArgument)
+		processVersionArgument(versionArgument),
 	);
 	const usedNodeVersion: ILogMessage = await getInstalledVersion('node');
 	const usedNPMVersion: ILogMessage = await getInstalledVersion('npm');

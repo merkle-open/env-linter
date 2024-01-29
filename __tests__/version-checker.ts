@@ -127,7 +127,7 @@ describe('processVersionArgument', () => {
 describe('getVersionCheckers', () => {
 	it('should return two log-messages (specify yo version and npm works with node).', async () => {
 		(fetch as any).mockReturnValue(
-			Promise.resolve(new Response(JSON.stringify([{ version: 'v3.0.0', npm: '3.0.0' }])))
+			Promise.resolve(new Response(JSON.stringify([{ version: 'v3.0.0', npm: '3.0.0' }]))),
 		);
 		(execa as any).mockReturnValue(Promise.resolve({ stdout: '3.0.0' }));
 		(readFile as any).mockReturnValue(Promise.resolve('3.0.0'));
@@ -140,7 +140,7 @@ describe('getVersionCheckers', () => {
 	});
 	it('should return three log-messages (node version ok, npm works with node, yo version ok)', async () => {
 		(fetch as any).mockReturnValue(
-			Promise.resolve(new Response(JSON.stringify([{ version: 'v3.0.0', npm: '3.0.0' }])))
+			Promise.resolve(new Response(JSON.stringify([{ version: 'v3.0.0', npm: '3.0.0' }]))),
 		);
 		(execa as any).mockReturnValue(Promise.resolve({ stdout: '3.0.0' }));
 		const expectedLogMessages: ILogMessage[] = [
@@ -153,7 +153,7 @@ describe('getVersionCheckers', () => {
 	});
 	it('should return two log-messages (node version ok and npm works with node) without any arguments', async () => {
 		(fetch as any).mockReturnValue(
-			Promise.resolve(new Response(JSON.stringify([{ version: 'v3.0.0', npm: '3.0.0' }])))
+			Promise.resolve(new Response(JSON.stringify([{ version: 'v3.0.0', npm: '3.0.0' }]))),
 		);
 		(execa as any).mockReturnValue(Promise.resolve({ stdout: '3.0.0' }));
 		const expectedLogMessages: ILogMessage[] = [
@@ -173,7 +173,7 @@ describe('getVersionCheckers', () => {
 	});
 	it('should return one log-messages (wrong npm version)', async () => {
 		(execa as any).mockImplementation((program) =>
-			program === 'node' ? Promise.resolve({ stdout: '3.0.0' }) : Promise.reject()
+			program === 'node' ? Promise.resolve({ stdout: '3.0.0' }) : Promise.reject(),
 		);
 		const expectedLogMessages: ILogMessage[] = [
 			{ error: true, text: logMessages.error.readProgramVersionError('npm') },
