@@ -4,12 +4,9 @@ All notable changes to this project will be documented in this file. See [standa
 
 ## [2.0.0](https://github.com/merkle-open/env-linter/compare/v1.0.0...v2.0.0) (2024-01-30)
 
-
 ### ⚠ BREAKING CHANGES
 
-* drops node 14 & 16 support
-
-* update node and dev dependencies ([8dc8ba8](https://github.com/merkle-open/env-linter/commit/8dc8ba8d5c479fdb1436d52fd00d77e2c994d83a))
+- **chore:** drops node 14 & 16 support ([8dc8ba8](https://github.com/merkle-open/env-linter/commit/8dc8ba8d5c479fdb1436d52fd00d77e2c994d83a))
 
 ## [1.0.0](https://github.com/merkle-open/env-linter/compare/v0.5.1...v1.0.0) (2022-05-19)
 
