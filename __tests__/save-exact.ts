@@ -1,6 +1,4 @@
-/// <reference types="@types/jest" />
-
-jest.mock('execa');
+vi.mock('execa');
 import execa from 'execa';
 
 import { getSaveExact, getSaveExactChecker } from '../src/save-exact';

@@ -1,7 +1,6 @@
-/// <reference types="@types/jest" />
-jest.mock('fs-extra');
-import { realpath } from 'fs-extra';
+import fs from 'fs-extra';
 import { fetchOptions, splitVersions } from '../src/fetch-options';
+vi.mock('fs-extra');
 
 describe('fetch-options', () => {
 	it('default', async () => {
@@ -56,8 +55,8 @@ describe('fetch-options', () => {
 	});
 	it('should catch error when realpath rejects', async () => {
 		const realConsoleError = console.error;
-		console.error = jest.fn();
-		(realpath as any).mockReturnValue(Promise.reject('example-error from fs.realpath'));
+		console.error = vi.fn();
+		vi.spyOn(fs, 'realpath').mockReturnValue(Promise.reject('example-error from fs.realpath'));
 		expect(await fetchOptions()).toEqual({
 			cwd: '',
 			lts: false,

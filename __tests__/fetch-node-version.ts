@@ -1,9 +1,7 @@
-/// <reference types="@types/jest" />
-
-jest.mock('node-fetch');
+vi.mock('node-fetch');
 import fetch from 'node-fetch';
 
-const { Response } = jest.requireActual('node-fetch');
+const { Response } = await vi.importActual('node-fetch');
 
 import { logMessages } from '../src/log-messages';
 import { getNodeList } from '../src/fetch-node-versions';

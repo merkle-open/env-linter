@@ -1,13 +1,11 @@
-/// <reference types="@types/jest" />
-
-jest.mock('execa');
-jest.mock('node-fetch');
-jest.mock('fs-extra');
+vi.mock('execa');
+vi.mock('node-fetch');
+vi.mock('fs-extra');
 
 import execa from 'execa';
 import fetch from 'node-fetch';
 
-const { Response } = jest.requireActual('node-fetch');
+const { Response } = await vi.importActual('node-fetch');
 
 import { logMessages } from '../src/log-messages';
 import { getNodeLTSChecker } from '../src/lts';

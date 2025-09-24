@@ -2,13 +2,12 @@ import execa from 'execa';
 import fetch from 'node-fetch';
 import { getNodeSecurityChecker } from '../src/security';
 import { logMessages } from '../src/log-messages';
-/// <reference types="@types/jest" />
 
-jest.mock('execa');
-jest.mock('node-fetch');
-jest.mock('fs-extra');
+vi.mock('execa');
+vi.mock('node-fetch');
+vi.mock('fs-extra');
 
-const { Response } = jest.requireActual('node-fetch');
+const { Response } = await vi.importActual('node-fetch');
 
 const exampleNodeList = [
 	{ version: 'v13.0.0', date: '2020-07-29', npm: '6.14.7', security: true, lts: false },

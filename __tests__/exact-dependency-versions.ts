@@ -1,9 +1,7 @@
-/// <reference types="@types/jest" />
-
-jest.mock('find-packages');
+vi.mock('find-packages');
 import findPackages from 'find-packages';
 
-jest.mock('../src/get-cwd.ts');
+vi.mock('../src/get-cwd.ts');
 import { getCwd } from '../src/get-cwd';
 
 import {

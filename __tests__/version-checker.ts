@@ -1,14 +1,11 @@
-/// <reference types="@types/jest" />
-
-jest.mock('execa');
-jest.mock('node-fetch');
-jest.mock('fs-extra');
-
 import execa from 'execa';
 import fetch from 'node-fetch';
-import { readFile } from 'fs-extra';
+import fs from 'fs-extra';
 
-const { Response } = jest.requireActual('node-fetch');
+vi.mock('execa');
+vi.mock('node-fetch');
+vi.mock('fs-extra');
+const { Response } = await vi.importActual('node-fetch');
 
 import { logMessages } from '../src/log-messages';
 import {
@@ -93,7 +90,7 @@ describe('processVersionArgument', () => {
 		});
 	});
 	it('should return the node version from .node-version file', async () => {
-		(readFile as any).mockReturnValue(Promise.resolve('10.0.0'));
+		vi.spyOn(fs, 'readFile').mockReturnValue(Promise.resolve('10.0.0'));
 		(execa as any).mockReturnValue(Promise.resolve({ stdout: '10.0.0' }));
 		expect(await processVersionArgument('node')).toMatchObject({
 			error: false,
@@ -130,7 +127,7 @@ describe('getVersionCheckers', () => {
 			Promise.resolve(new Response(JSON.stringify([{ version: 'v3.0.0', npm: '3.0.0' }]))),
 		);
 		(execa as any).mockReturnValue(Promise.resolve({ stdout: '3.0.0' }));
-		(readFile as any).mockReturnValue(Promise.resolve('3.0.0'));
+		vi.spyOn(fs, 'readFile').mockReturnValue(Promise.resolve('3.0.0'));
 		const expectedLogMessages: ILogMessage[] = [
 			{ error: false, text: logMessages.warning.specifyProgramVersion('yo', '3.0.0') },
 			{ error: false, text: logMessages.success.nodeVersionWorksWithNPMVersion('3.0.0', '3.0.0') },
